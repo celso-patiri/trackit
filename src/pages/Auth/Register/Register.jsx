@@ -72,8 +72,6 @@ export default function Register() {
 	}
 
 	function handleSubmit(e) {
-		// e.preventDefault();
-
 		if (!userInfo.name || !userInfo.password || !userInfo.email || !userInfo.picture) return;
 
 		setIsProcessingRequest(true);
