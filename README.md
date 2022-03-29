@@ -6,7 +6,7 @@
     <img src="https://github.com/celso-patiri/trackit/blob/master/src/assets/img/logo.png" alt="Logo" width="200">
   </a>
 
-<h2 align="center">Cineflex</h2>
+<h2 align="center">TrackIt</h2>
   
   [![wakatime](https://wakatime.com/badge/user/8a52c0fd-ec78-403a-81d0-07c674c564b3/project/afd27a18-548a-4b06-826f-df5b06286bf1.svg)](https://wakatime.com/badge/user/8a52c0fd-ec78-403a-81d0-07c674c564b3/project/afd27a18-548a-4b06-826f-df5b06286bf1)
   
