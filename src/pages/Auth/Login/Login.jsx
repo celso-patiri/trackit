@@ -4,7 +4,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/img/logo.png';
 import SessionContext from '../../../context/SessionContext';
-import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styles';
+import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
 

@@ -1,9 +1,9 @@
-import { FormContainer, Logo, Form, Input, StyledLink, StyledSubmit } from '../styles';
-import logoImg from '../../../assets/img/logo.png';
-import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
+import logoImg from '../../../assets/img/logo.png';
+import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
 

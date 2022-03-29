@@ -26,6 +26,20 @@ const AppTheme = createGlobalStyle`
 		--font-size-6: 39px;
 	}
 
+	*,
+	*::after,
+	*::before {
+		box-sizing: border-box;
+	}
+
+	html {
+		font-family: 'Lexend Deca', sans-serif;
+	}
+
+	header {
+		font-family: 'Playball', cursive;
+	}
+
 	main{
 		display: flex;
 		flex-direction: column;
