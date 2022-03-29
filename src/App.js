@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Today from './pages/Today/Today';
-import AppTheme from './assets/styles/__theme';
+import AppTheme from './styles/__theme';
 import { SessionProvider } from './context/SessionContext';
 import Register from './pages/Auth/Register/Register';
 import Login from './pages/Auth/Login/Login';
