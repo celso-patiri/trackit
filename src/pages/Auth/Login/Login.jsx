@@ -1,15 +1,17 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/img/logo.png';
-import { FormContainer, Logo, Input, StyledLink, Form, StyledSubmit } from '../styles';
-import { ThreeDots } from 'react-loader-spinner';
+import SessionContext from '../../../context/SessionContext';
+import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styles';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
 
 export default function Login() {
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
+	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
 
 	return (
@@ -63,8 +65,13 @@ export default function Login() {
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)
-			.then((res) => console.log(res))
-			.catch((err) => window.alert('pera la meu rei'))
-			.finally(() => setIsProcessingRequest(false));
+			.then((res) => {
+				setSessionInfo(res.data);
+				navigate('/today');
+			})
+			.catch((err) => {
+				setIsProcessingRequest(false);
+				window.alert('pera la meu rei');
+			});
 	}
 }

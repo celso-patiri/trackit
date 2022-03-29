@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-const SessionContext = createContext(null);
+const SessionContext = createContext({});
 
 export function SessionProvider({ children }) {
 	const [sessionInfo, setSessionInfo] = useState({});
@@ -13,3 +13,5 @@ export function SessionProvider({ children }) {
 		</SessionContext.Provider>
 	);
 }
+
+export default SessionContext;
