@@ -1,11 +1,3 @@
-import styled from 'styled-components';
-
 export default function Today() {
-	return <StyledToday>Today page</StyledToday>;
+	return <main>Today page</main>;
 }
-
-const StyledToday = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;

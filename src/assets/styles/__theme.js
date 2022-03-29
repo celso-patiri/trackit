@@ -22,6 +22,13 @@ const AppTheme = createGlobalStyle`
 		--font-size-4: 20px;
 		--font-size-5: 23px;
 	}
+
+	main{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
 `;
 
 export default AppTheme;

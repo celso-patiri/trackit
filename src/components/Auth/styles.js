@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const FormContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+const FormContainer = styled.main`
 	margin-top: 10vh;
 `;
 
@@ -29,14 +26,34 @@ const Input = styled.input`
 	padding: 5px;
 	margin: 3px 0;
 
+	&:disabled {
+		background: var(--gray-light);
+	}
+
 	&::placeholder {
 		color: var(--gray-light);
 	}
+`;
 
-	&.submit {
-		color: var(--text-light);
-		background-color: var(--blue-light);
-		border: none;
+const StyledSubmit = styled.button`
+	color: var(--text-light);
+	background-color: var(--blue-light);
+	font-size: var(--font-size-4);
+	width: var(--input-width);
+	height: var(--input-heigth);
+	border: none;
+	border-radius: var(--border-radius-1);
+
+	&:disabled {
+		opacity: 0.7;
+	}
+
+	div {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 `;
 
@@ -47,4 +64,4 @@ const StyledLink = styled(Link)`
 	text-decoration: none;
 `;
 
-export { FormContainer, Input, Form, Logo, StyledLink };
+export { FormContainer, Input, Form, StyledSubmit, Logo, StyledLink };
