@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import Habits from './components/Habits/Habits';
-import Today from './components/Today/Today';
+import Today from './pages/Today/Today';
 import AppTheme from './assets/styles/__theme';
-import Register from './components/Auth/Register/Register';
-import Login from './components/Auth/Login/Login';
-import History from './components/History/History';
 import { SessionProvider } from './context/SessionContext';
+import Register from './pages/Auth/Register/Register';
+import Login from './pages/Auth/Login/Login';
+import Habits from './pages/Habits/Habits';
+import History from './pages/History/History';
 
 function App() {
 	return (
