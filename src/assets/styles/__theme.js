@@ -15,12 +15,15 @@ const AppTheme = createGlobalStyle`
 		--input-width: 70%;
 		--input-heigth: 7vh;	
 		
+		--header-height: 12vh;
+
 		--border-radius-1: 5px;
 		--font-size-1: 14px;
 		--font-size-2: 16px;
 		--font-size-3: 18px;
 		--font-size-4: 20px;
 		--font-size-5: 23px;
+		--font-size-6: 39px;
 	}
 
 	main{
