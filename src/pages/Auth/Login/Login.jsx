@@ -11,7 +11,7 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/log
 export default function Login() {
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
+	const { setSessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
 
 	return (
