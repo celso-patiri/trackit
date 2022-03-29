@@ -1,3 +1,28 @@
+<div align="center">
+  
+ 
+  
+  <a href="https://github.com/celso-patiri/trackit/">
+    <img src="https://github.com/celso-patiri/trackit/blob/master/src/assets/img/logo.png" alt="Logo" width="200">
+  </a>
+  
+  [![wakatime](https://wakatime.com/badge/user/8a52c0fd-ec78-403a-81d0-07c674c564b3/project/afd27a18-548a-4b06-826f-df5b06286bf1.svg)](https://wakatime.com/badge/user/8a52c0fd-ec78-403a-81d0-07c674c564b3/project/afd27a18-548a-4b06-826f-df5b06286bf1)
+  
+  <h3 align="center">
+     Habit Tracking Web Development Project
+  </h3>
+    <br />
+</div>
+
+
+<div align="center">
+  
+  ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+  
+ </div>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
