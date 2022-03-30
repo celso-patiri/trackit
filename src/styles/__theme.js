@@ -16,6 +16,7 @@ const AppTheme = createGlobalStyle`
 		--input-heigth: 7vh;	
 		
 		--header-height: 12vh;
+		--footer-height: 12vh;
 
 		--border-radius-1: 5px;
 		--font-size-1: 14px;
@@ -44,6 +45,8 @@ const AppTheme = createGlobalStyle`
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		background-color: var(--gray-background);
+		height: 100vh;
 	}
 	
 `;

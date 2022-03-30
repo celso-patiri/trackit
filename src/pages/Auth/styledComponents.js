@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const FormContainer = styled.main`
 	margin-top: 10vh;
+	background-color: #fff;
 `;
 
 const Logo = styled.img`
