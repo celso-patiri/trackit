@@ -31,7 +31,7 @@ export default function Today() {
 				<h1>{dayjs().format('dddd, DD/MM')}</h1>
 				<h3>Nenhum hábito concluido ainda</h3>
 			</Title>
-			{habits.length == 0 && (
+			{habits.length === 0 && (
 				<NoHabitsMessage>
 					<p>Looks like you haven't got any habits planned for today.</p>
 					<button onClick={() => navigate('/habits')}>Go to Habits</button>

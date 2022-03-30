@@ -40,7 +40,7 @@ export default function Habits() {
 			{newHabits.map((habit, index) => (
 				<NewHabit id={index} removeHabit={removeHabit} key={habit} />
 			))}
-			{habits.length == 0 && (
+			{habits.length === 0 && (
 				<Paragraph>
 					You haven't added any habits yet. Add a habit to start tracking!
 				</Paragraph>
