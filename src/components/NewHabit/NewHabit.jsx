@@ -78,8 +78,10 @@ export default function NewHabit({ removeHabit, id }) {
 			.then((res) => {
 				removeHabit(id);
 			})
-			.catch((err) => console.error(err))
-			.finally(() => setIsProcessingRequest(false));
+			.catch((err) => {
+				console.error(err);
+				setIsProcessingRequest(false);
+			});
 	}
 
 	function selectDay(index) {
