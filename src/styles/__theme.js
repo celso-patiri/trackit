@@ -10,7 +10,9 @@ const AppTheme = createGlobalStyle`
 		--gray-background: #e5e5e5;
 		--green-done: #8fc549;
 		--text-light: #fff;
-		
+		--text-disabled: #AFAFAF;
+
+
 		--input-border: 2px solid var(--gray-light);
 		--input-width: 70%;
 		--input-heigth: 7vh;	
@@ -46,7 +48,27 @@ const AppTheme = createGlobalStyle`
 		flex-direction: column;
 		align-items: center;
 		background-color: var(--gray-background);
-		height: 100vh;
+		min-height:calc(100vh - var(--header-height) - var(--footer-height));
+		height: calc(100% - var(--header-height) - var(--footer-height));
+		margin-top: var(--header-height);
+		margin-bottom: var(--footer-height);
+		padding: 21px;
+	}
+
+	input{
+		&:disabled {
+			background: var(--gray-light);
+			color: var(--text-disabled)
+		}
+
+		&::placeholder {
+			color: var(--gray-light);
+		}
+
+		&:focus {
+			outline: 2px solid var(--blue-light);
+			border:	2px solid rgba(0,0,0,0);
+		}
 	}
 	
 `;

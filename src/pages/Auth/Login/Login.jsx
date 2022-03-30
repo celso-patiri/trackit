@@ -65,7 +65,7 @@ export default function Login() {
 			.post(URL, userInfo)
 			.then((res) => {
 				setSessionInfo(res.data);
-				navigate('/today');
+				navigate('/habits');
 			})
 			.catch((err) => {
 				setIsProcessingRequest(false);

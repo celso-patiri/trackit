@@ -29,11 +29,17 @@ const Input = styled.input`
 
 	&:disabled {
 		background: var(--gray-light);
+		color: var(--text-disabled);
 	}
 
 	&::placeholder {
 		color: var(--gray-light);
 	}
+
+	/* &:focus {
+		outline: 2px solid var(--blue-light);
+		border: none;
+	} */
 `;
 
 const StyledSubmit = styled.button`
