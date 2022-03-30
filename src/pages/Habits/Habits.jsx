@@ -17,8 +17,6 @@ export default function Habits() {
 
 	const { sessionInfo } = useContext(SessionContext);
 
-	console.log(habits);
-
 	useEffect(() => {
 		axios
 			.get(URL, {

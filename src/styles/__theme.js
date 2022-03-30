@@ -8,6 +8,7 @@ const AppTheme = createGlobalStyle`
 		--gray-medium: #bababa;
 		--gray-dark: #666666;
 		--gray-background: #e5e5e5;
+		--gray-disabled: #f2f2f2;
 		--green-done: #8fc549;
 		--text-light: #fff;
 		--text-disabled: #AFAFAF;
@@ -57,7 +58,7 @@ const AppTheme = createGlobalStyle`
 
 	input{
 		&:disabled {
-			background: var(--gray-light);
+			background: var(--gray-disabled);
 			color: var(--text-disabled)
 		}
 

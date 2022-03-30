@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 import styled from 'styled-components';
 import SessionContext from '../../context/SessionContext';
 import DayCheckbox from '../DayCheckbox/DayCheckbox';
@@ -36,7 +37,13 @@ export default function NewHabit({ removeHabit, id }) {
 			</Days>
 			<Buttons>
 				<Cancel onClick={handleCancel}>Cancel</Cancel>
-				<Save onClick={handleSave}>Save</Save>
+				<Save onClick={handleSave}>
+					{isProcessingRequest ? (
+						<ThreeDots color="#FFF" height={70} width={70} />
+					) : (
+						'Save'
+					)}
+				</Save>
 			</Buttons>
 		</HabitForm>
 	);
@@ -47,12 +54,12 @@ export default function NewHabit({ removeHabit, id }) {
 
 	function handleCancel(e) {
 		e.preventDefault();
-		removeHabit(id);
+		if (!isProcessingRequest) removeHabit(id);
 	}
 
 	function handleSave(e) {
 		e.preventDefault();
-		if (habitName.length === 0) return;
+		if (habitName.length === 0 || isProcessingRequest) return;
 
 		setIsProcessingRequest(true);
 		axios
@@ -133,6 +140,12 @@ const Buttons = styled.div`
 const Save = styled.button`
 	color: var(--text-light);
 	background-color: var(--blue-light);
+
+	div {
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
 `;
 
 const Cancel = styled.button`

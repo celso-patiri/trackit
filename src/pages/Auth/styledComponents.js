@@ -26,20 +26,6 @@ const Input = styled.input`
 	border-radius: var(--border-radius-1);
 	padding: 5px;
 	margin: 3px 0;
-
-	&:disabled {
-		background: var(--gray-light);
-		color: var(--text-disabled);
-	}
-
-	&::placeholder {
-		color: var(--gray-light);
-	}
-
-	&:focus {
-		outline: 2px solid var(--blue-light);
-		border: none;
-	}
 `;
 
 const StyledSubmit = styled.button`
