@@ -2,15 +2,19 @@ import styled from 'styled-components';
 
 import checkIcon from '../../../assets/img/check.png';
 
-export default function HabitCard({ name, streak, record }) {
+export default function HabitCard({ name, streak, record, done }) {
 	return (
 		<Card>
 			<Content>
 				<h1>{name}</h1>
-				<h3>Current streak: {streak} days</h3>
-				<h3>Personal record: {record} days</h3>
+				<h3>
+					Current streak: <Highlight done={done}>{streak} days</Highlight>
+				</h3>
+				<h3>
+					Personal record: <Highlight done={done}>{record} days</Highlight>
+				</h3>
 			</Content>
-			<Icon src={checkIcon} alt="check" />
+			<Icon src={checkIcon} done={done} alt="check" />
 		</Card>
 	);
 }
@@ -41,9 +45,13 @@ const Content = styled.div`
 	}
 `;
 
+const Highlight = styled.span`
+	color: ${({ done }) => (done ? 'var(--green-done)' : 'var(--gray-dark)')};
+`;
+
 const Icon = styled.img`
 	border-radius: var(--border-radius-1);
-	background-color: var(--gray-lighter);
+	background-color: ${({ done }) => (done ? 'var(--green-done)' : 'var(--gray-lighter)')};
 	box-sizing: content-box;
 	width: 2.5rem;
 	height: 2.5rem;

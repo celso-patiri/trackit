@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
+import HabitCard from '../../components/HabitCard/Today/HabitCard';
 import Header from '../../components/Header/Header';
 import SessionContext from '../../context/SessionContext';
 
@@ -11,8 +13,7 @@ const dayjs = require('dayjs');
 export default function Today() {
 	const [habits, setHabits] = useState([]);
 	const { sessionInfo } = useContext(SessionContext);
-
-	console.log(habits);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		axios
@@ -31,10 +32,20 @@ export default function Today() {
 				<h3>Nenhum hábito concluido ainda</h3>
 			</Title>
 			{habits.length == 0 && (
-				<Paragraph>
-					You haven't added any habits yet. Add a habit to start tracking!
-				</Paragraph>
+				<NoHabitsMessage>
+					<p>Looks like you haven't got any habits planned for today.</p>
+					<button onClick={() => navigate('/habits')}>Go to Habits</button>
+				</NoHabitsMessage>
 			)}
+			{habits.map((habit) => (
+				<HabitCard
+					name={habit.name}
+					streak={habit.currentSequence}
+					record={habit.highestSequence}
+					done={habit.done}
+					key={habit.id}
+				/>
+			))}
 
 			<Footer />
 		</Main>
@@ -58,9 +69,25 @@ const Title = styled.div`
 	}
 `;
 
-const Paragraph = styled.p`
-	color: var(--gray-dark);
-	font-size: var(--font-size-4);
-	text-align: center;
-	margin-top: 6vh;
+const NoHabitsMessage = styled.section`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2vh;
+
+	p {
+		color: var(--gray-dark);
+		font-size: var(--font-size-4);
+		text-align: center;
+		margin-top: 6vh;
+	}
+
+	button {
+		background-color: var(--blue-light);
+		color: #fff;
+		border: none;
+		border-radius: var(--border-radius-1);
+		height: 6vh;
+		width: 30%;
+	}
 `;
