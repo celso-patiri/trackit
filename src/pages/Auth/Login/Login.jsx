@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/img/logo.png';
@@ -14,9 +14,7 @@ export default function Login() {
 	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (sessionInfo.token) navigate('/habits');
-	}, [sessionInfo]);
+	if (sessionInfo.token) navigate('/habits');
 
 	return (
 		<FormContainer>
