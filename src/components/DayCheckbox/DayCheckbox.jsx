@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export default function DayCheckbox({ day, toggle }) {
-	return <Checkbox onClick={toggle} day={day} type="checkbox" />;
+export default function DayCheckbox({ day, toggle, isChecked }) {
+	return <Checkbox onChange={toggle} day={day} checked={isChecked} type="checkbox" />;
 }
 
 const Checkbox = styled.input`
@@ -25,7 +25,8 @@ const Checkbox = styled.input`
 	}
 
 	&:checked {
-		background-color: red;
+		background-color: var(--gray-light);
+		color: #fff;
 	}
 
 	&:focus {
