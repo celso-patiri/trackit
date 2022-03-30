@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/img/logo.png';
+import SessionContext from '../../../context/SessionContext';
 import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
@@ -10,7 +11,12 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sig
 export default function Register() {
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
+	const { sessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (sessionInfo.token) navigate('/habits');
+	}, [sessionInfo]);
 
 	return (
 		<FormContainer>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/img/logo.png';
@@ -11,8 +11,12 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/log
 export default function Login() {
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const { setSessionInfo } = useContext(SessionContext);
+	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (sessionInfo.token) navigate('/habits');
+	}, [sessionInfo]);
 
 	return (
 		<FormContainer>
