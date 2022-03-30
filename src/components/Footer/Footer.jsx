@@ -1,12 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
 
 export default function Footer() {
+	const navigate = useNavigate();
+
 	return (
 		<StyledFooter>
-			<h2>Habits</h2>
+			<h2 onClick={() => navigate('/habits')}>Habits</h2>
 			<ProgressBar />
-			<h2>History</h2>
+			<h2 onClick={() => navigate('/history')}>History</h2>
 		</StyledFooter>
 	);
 }
