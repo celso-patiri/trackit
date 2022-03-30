@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/Header/Header';
 import SessionContext from '../../context/SessionContext';
 import plusIcon from '../../assets/img/plus.png';
+import Footer from '../../components/Footer/Footer';
 
 export default function Today() {
 	const [habits, setHabits] = useState(null);
@@ -21,6 +22,7 @@ export default function Today() {
 					You haven't added any habits yet. Add a habit to start tracking!
 				</Paragraph>
 			)}
+			<Footer />
 		</Main>
 	);
 }

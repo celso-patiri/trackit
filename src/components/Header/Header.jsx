@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function Header({ imgUrl }) {
+	const navigate = useNavigate();
+
 	return (
 		<StyledHeader>
-			<h1>TrackIt</h1>
+			<h1 onClick={() => navigate('/')}>TrackIt</h1>
 			<UserAvatar src={imgUrl} alt="user avatar" />
 		</StyledHeader>
 	);
