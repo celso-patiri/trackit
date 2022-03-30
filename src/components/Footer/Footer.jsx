@@ -8,7 +8,7 @@ export default function Footer() {
 	return (
 		<StyledFooter>
 			<h2 onClick={() => navigate('/habits')}>Habits</h2>
-			<ProgressBar />
+			<ProgressBar navigate={navigate} />
 			<h2 onClick={() => navigate('/history')}>History</h2>
 		</StyledFooter>
 	);

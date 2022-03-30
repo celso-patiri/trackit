@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 const percentage = 66;
 
-export default function ProgressBar() {
+export default function ProgressBar({ navigate }) {
 	return (
-		<Container>
+		<Container onClick={() => navigate('/today')}>
 			<CircularProgressbar
 				value={percentage}
 				text="Today"

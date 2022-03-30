@@ -4,6 +4,7 @@ const AppTheme = createGlobalStyle`
 	:root {
 		--blue-light: #52b6ff;
 		--blue-dark: #126ba5;
+		--gray-lighter: #EBEBEB;
 		--gray-light: #b9b9b9;
 		--gray-medium: #bababa;
 		--gray-dark: #666666;
