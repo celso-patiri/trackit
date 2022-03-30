@@ -37,7 +37,7 @@ export default function Habits() {
 			<Header imgUrl={sessionInfo.image} />
 			<MyHabitsTitle>
 				<h1>My Habits</h1>
-				<img onChange={addHabit} src={plusIcon} alt="add habit" />
+				<img onClick={addHabit} src={plusIcon} alt="add habit" />
 			</MyHabitsTitle>
 			{newHabits.map((habit, index) => (
 				<NewHabit id={index} removeHabit={removeHabit} key={habit} />
@@ -48,7 +48,7 @@ export default function Habits() {
 				</Paragraph>
 			)}
 			{habits.map((habit) => (
-				<HabitCard name={habit.name} days={habit.days} />
+				<HabitCard name={habit.name} days={habit.days} id={habit.id} key={habit.id} />
 			))}
 
 			<Footer />

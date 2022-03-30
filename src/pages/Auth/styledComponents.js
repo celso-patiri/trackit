@@ -36,10 +36,10 @@ const Input = styled.input`
 		color: var(--gray-light);
 	}
 
-	/* &:focus {
+	&:focus {
 		outline: 2px solid var(--blue-light);
 		border: none;
-	} */
+	}
 `;
 
 const StyledSubmit = styled.button`

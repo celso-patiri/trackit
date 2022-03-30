@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 import DayCheckbox from '../../DayCheckbox/DayCheckbox';
 import trashcan from '../../../assets/img/trash-can.png';
+import { useContext } from 'react';
+import SessionContext from '../../../context/SessionContext';
+import axios from 'axios';
 
+const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-export default function HabitCard({ name, days }) {
+export default function HabitCard({ name, days, id }) {
+	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
+
 	return (
 		<Card>
 			<HabitName>{name}</HabitName>
@@ -18,9 +24,19 @@ export default function HabitCard({ name, days }) {
 					/>
 				))}
 			</Days>
-			<Trashcan src={trashcan} alt="delete" />
+			<Trashcan onClick={deleteHabit} src={trashcan} alt="delete" />
 		</Card>
 	);
+
+	function deleteHabit() {
+		axios
+			.delete(`${URL}/${id}`, {
+				headers: { Authorization: `Bearer ${sessionInfo.token}` },
+				data: { id, name, days },
+			})
+			.then((res) => setSessionInfo({ ...sessionInfo }))
+			.catch((err) => console.error(err));
+	}
 }
 
 function preventToggle(e) {

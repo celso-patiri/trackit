@@ -35,8 +35,8 @@ export default function NewHabit({ removeHabit, id }) {
 				))}
 			</Days>
 			<Buttons>
-				<Cancel onChange={handleCancel}>Cancel</Cancel>
-				<Save onChange={handleSave}>Save</Save>
+				<Cancel onClick={handleCancel}>Cancel</Cancel>
+				<Save onClick={handleSave}>Save</Save>
 			</Buttons>
 		</HabitForm>
 	);

@@ -6,7 +6,7 @@ export default function Header({ imgUrl }) {
 
 	return (
 		<StyledHeader>
-			<h1 onChange={() => navigate('/')}>TrackIt</h1>
+			<h1 onClick={() => navigate('/')}>TrackIt</h1>
 			<UserAvatar src={imgUrl} alt="user avatar" />
 		</StyledHeader>
 	);
@@ -30,9 +30,6 @@ const StyledHeader = styled.header`
 	h1 {
 		font-size: var(--font-size-6);
 		color: var(--text-light);
-	}
-
-	img {
 	}
 `;
 
