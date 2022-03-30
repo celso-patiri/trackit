@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import ProgressBar from './ProgressBar';
 
 export default function Footer() {
 	return (
 		<StyledFooter>
 			<h2>Habits</h2>
-
+			<ProgressBar />
 			<h2>History</h2>
 		</StyledFooter>
 	);
