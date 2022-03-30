@@ -10,7 +10,7 @@ const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 export default function NewHabit({ removeHabit, id }) {
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 	const [habitName, setHabitName] = useState('');
-	const [selectedDays, setSelectedDays] = useState(Array(7).fill(false));
+	const [selectedDays, setSelectedDays] = useState([]);
 
 	const { sessionInfo } = useContext(SessionContext);
 
@@ -35,8 +35,8 @@ export default function NewHabit({ removeHabit, id }) {
 				))}
 			</Days>
 			<Buttons>
-				<Cancel onClick={handleCancel}>Cancel</Cancel>
-				<Save onClick={handleSave}>Save</Save>
+				<Cancel onChange={handleCancel}>Cancel</Cancel>
+				<Save onChange={handleSave}>Save</Save>
 			</Buttons>
 		</HabitForm>
 	);
@@ -54,12 +54,13 @@ export default function NewHabit({ removeHabit, id }) {
 		e.preventDefault();
 		if (habitName.length === 0) return;
 
+		setIsProcessingRequest(true);
 		axios
 			.post(
 				URL,
 				{
 					name: habitName,
-					days: selectedDays.filter((day) => day).map((it, index) => index),
+					days: selectedDays,
 				},
 				{
 					headers: {
@@ -67,15 +68,19 @@ export default function NewHabit({ removeHabit, id }) {
 					},
 				}
 			)
-			.then((res) => console.log(res))
-			.catch((err) => console.error(err));
+			.then((res) => {
+				removeHabit(id);
+			})
+			.catch((err) => console.error(err))
+			.finally(() => setIsProcessingRequest(false));
 	}
 
 	function selectDay(index) {
-		selectedDays[index] = !selectedDays[index];
+		selectedDays.push(index);
 		setSelectedDays([...selectedDays]);
 	}
 }
+
 const HabitForm = styled.form`
 	background-color: #fff;
 	width: 100%;

@@ -6,6 +6,7 @@ import plusIcon from '../../assets/img/plus.png';
 import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 import NewHabit from '../../components/NewHabit/NewHabit';
+import HabitCard from '../../components/HabitCard/Habits/HabitCard';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
@@ -16,6 +17,8 @@ export default function Habits() {
 
 	const { sessionInfo } = useContext(SessionContext);
 
+	console.log(habits);
+
 	useEffect(() => {
 		axios
 			.get(URL, {
@@ -23,10 +26,10 @@ export default function Habits() {
 			})
 			.then(({ data }) => setHabits(data))
 			.catch((err) => console.error(err));
-	}, [sessionInfo]);
+	}, [sessionInfo, newHabits]);
 
 	// console.log(sessionInfo);
-	console.log(newHabits);
+	// console.log(newHabits);
 	// console.log(habits);
 
 	return (
@@ -34,7 +37,7 @@ export default function Habits() {
 			<Header imgUrl={sessionInfo.image} />
 			<MyHabitsTitle>
 				<h1>My Habits</h1>
-				<img onClick={addHabit} src={plusIcon} alt="add habit" />
+				<img onChange={addHabit} src={plusIcon} alt="add habit" />
 			</MyHabitsTitle>
 			{newHabits.map((habit, index) => (
 				<NewHabit id={index} removeHabit={removeHabit} key={habit} />
@@ -44,6 +47,10 @@ export default function Habits() {
 					You haven't added any habits yet. Add a habit to start tracking!
 				</Paragraph>
 			)}
+			{habits.map((habit) => (
+				<HabitCard name={habit.name} days={habit.days} />
+			))}
+
 			<Footer />
 		</Main>
 	);
@@ -70,6 +77,7 @@ const MyHabitsTitle = styled.div`
 	width: 100%;
 	color: var(--blue-dark);
 	font-size: var(--font-size-5);
+	margin-bottom: 4vh;
 
 	img {
 		padding: 6px;
