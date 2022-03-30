@@ -1,3 +1,88 @@
+import { useContext, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Header from '../../components/Header/Header';
+import SessionContext from '../../context/SessionContext';
+import plusIcon from '../../assets/img/plus.png';
+import Footer from '../../components/Footer/Footer';
+import axios from 'axios';
+import NewHabit from '../../components/NewHabit/NewHabit';
+
+const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
+
 export default function Habits() {
-	return <main>Habits page</main>;
+	const [habits, setHabits] = useState([]);
+	const [newHabits, setNewHabits] = useState([]);
+	const [newHabitKey, setNewHabitKey] = useState(0);
+
+	const { sessionInfo } = useContext(SessionContext);
+
+	useEffect(() => {
+		axios
+			.get(URL, {
+				headers: { Authorization: `Bearer ${sessionInfo.token}` },
+			})
+			.then(({ data }) => setHabits(data))
+			.catch((err) => console.error(err));
+	}, [sessionInfo]);
+
+	// console.log(sessionInfo);
+	console.log(newHabits);
+	// console.log(habits);
+
+	return (
+		<Main>
+			<Header imgUrl={sessionInfo.image} />
+			<MyHabitsTitle>
+				<h1>My Habits</h1>
+				<img onClick={addHabit} src={plusIcon} alt="add habit" />
+			</MyHabitsTitle>
+			{newHabits.map((habit, index) => (
+				<NewHabit id={index} removeHabit={removeHabit} key={habit} />
+			))}
+			{habits.length == 0 && (
+				<Paragraph>
+					You haven't added any habits yet. Add a habit to start tracking!
+				</Paragraph>
+			)}
+			<Footer />
+		</Main>
+	);
+
+	function addHabit() {
+		newHabits.push(newHabitKey);
+		setNewHabitKey(newHabitKey + 1);
+		setNewHabits([...newHabits]);
+	}
+
+	function removeHabit(index) {
+		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
+	}
 }
+
+const Main = styled.main`
+	padding: 21px;
+`;
+
+const MyHabitsTitle = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	color: var(--blue-dark);
+	font-size: var(--font-size-5);
+
+	img {
+		padding: 6px;
+		width: 2rem;
+		border-radius: var(--border-radius-1);
+		background-color: var(--blue-light);
+		cursor: pointer;
+	}
+`;
+
+const Paragraph = styled.p`
+	color: var(--gray-dark);
+	font-size: var(--font-size-4);
+	text-align: center;
+	margin-top: 6vh;
+`;
