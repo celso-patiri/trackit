@@ -11,15 +11,16 @@ import SessionContext from '../../context/SessionContext';
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily';
 
 export default function History() {
-	const [today, setToday] = useState(new Date());
 	const { sessionInfo } = useContext(SessionContext);
-	const [activeDays, setActiveDays] = useState([]);
+
+	const [daysWithHabits, setDayswithHabits] = useState([]);
+	const [today, setToday] = useState(new Date());
 
 	useEffect(() => {
 		axios
 			.get(URL, { headers: { Authorization: `Bearer ${sessionInfo.token}` } })
-			.then(({ data }) => setActiveDays(data.map((entry) => entry.day)))
-			.catch((err) => console.error(err));
+			.then(({ data }) => setDayswithHabits(data.map((entry) => entry.day)))
+			.catch(console.error);
 	}, [sessionInfo]);
 
 	return (
@@ -36,7 +37,7 @@ export default function History() {
 
 	function getTileClassName({ date, view }) {
 		if (view !== 'month') return '';
-		const currentDay = activeDays.find((day) => day === dayjs(date).format('DD/MM/YYYY'));
+		const currentDay = daysWithHabits.find((day) => day === dayjs(date).format('DD/MM/YYYY'));
 		if (currentDay) return currentDay.done ? 'complete' : 'incomplete';
 	}
 }
