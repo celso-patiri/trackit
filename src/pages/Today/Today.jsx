@@ -25,8 +25,8 @@ export default function Today() {
 			.catch((err) => console.error(err));
 	}, [sessionInfo, habitToggled]);
 
-	const habitsDone = habits.reduce((sum, habit) => (sum + habit.done ? 1 : 0), 0);
-	const percentageDone = (habitsDone / habits.length) * 100;
+	const habitsDone = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
+	const percentageDone = Math.ceil((habitsDone / habits.length) * 100);
 
 	return (
 		<Main>
