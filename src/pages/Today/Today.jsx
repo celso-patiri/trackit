@@ -11,10 +11,13 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/t
 const dayjs = require('dayjs');
 
 export default function Today() {
-	const [habits, setHabits] = useState([]);
 	const { sessionInfo } = useContext(SessionContext);
-	const [habitToggled, setHabitToggled] = useState(false);
 	const navigate = useNavigate();
+
+	const [habits, setHabits] = useState([]);
+	const [toggle, toggleHabit] = useState(false);
+
+	const announceToggle = () => toggleHabit(!toggle);
 
 	useEffect(() => {
 		axios
@@ -22,54 +25,48 @@ export default function Today() {
 				headers: { Authorization: `Bearer ${sessionInfo.token}` },
 			})
 			.then(({ data }) => setHabits(data))
-			.catch((err) => console.error(err));
-	}, [sessionInfo, habitToggled]);
+			.catch(console.error);
+	}, [sessionInfo, toggle]);
 
-	const habitsDone = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
-	const percentageDone = Math.ceil((habitsDone / habits.length) * 100);
+	const habitsDoneToday = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
+	const percentageDone = Math.ceil((habitsDoneToday / habits.length) * 100);
 
 	return (
-		<Main>
+		<>
 			<Header imgUrl={sessionInfo.image} />
+			<main>
+				<Title active={percentageDone > 0}>
+					<h1>{dayjs().format('dddd, DD/MM')}</h1>
+					{percentageDone > 0 ? (
+						<h3>{percentageDone}% done today</h3>
+					) : (
+						<h3>No habit done yet</h3>
+					)}
+				</Title>
 
-			<Title active={percentageDone > 0}>
-				<h1>{dayjs().format('dddd, DD/MM')}</h1>
-				{percentageDone > 0 ? (
-					<h3>{percentageDone}% done today</h3>
-				) : (
-					<h3>No habit done yet</h3>
+				{habits.length === 0 && (
+					<NoHabitsMessage>
+						<p>Looks like you haven't got any habits planned for today.</p>
+						<button onClick={() => navigate('/habits')}>Go to Habits</button>
+					</NoHabitsMessage>
 				)}
-			</Title>
 
-			{habits.length === 0 && (
-				<NoHabitsMessage>
-					<p>Looks like you haven't got any habits planned for today.</p>
-					<button onClick={() => navigate('/habits')}>Go to Habits</button>
-				</NoHabitsMessage>
-			)}
-
-			{habits.map((habit) => (
-				<HabitCard
-					name={habit.name}
-					streak={habit.currentSequence}
-					record={habit.highestSequence}
-					done={habit.done}
-					id={habit.id}
-					annouceToggle={toggleHabit}
-					key={habit.id}
-				/>
-			))}
-
+				{habits.map((habit) => (
+					<HabitCard
+						name={habit.name}
+						streak={habit.currentSequence}
+						record={habit.highestSequence}
+						done={habit.done}
+						id={habit.id}
+						annouceToggle={announceToggle}
+						key={habit.id}
+					/>
+				))}
+			</main>
 			<Footer />
-		</Main>
+		</>
 	);
-
-	function toggleHabit() {
-		setHabitToggled(!habitToggled);
-	}
 }
-
-const Main = styled.main``;
 
 const Title = styled.div`
 	align-self: flex-start;
