@@ -1,16 +1,93 @@
-import { useContext } from 'react';
+import axios from 'axios';
+import dayjs from 'dayjs';
+import { useContext, useEffect, useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import SessionContext from '../../context/SessionContext';
 
+const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily';
+
 export default function History() {
+	const [today, setToday] = useState(new Date());
 	const { sessionInfo } = useContext(SessionContext);
+	const [activeDays, setActiveDays] = useState([]);
+
+	useEffect(() => {
+		axios
+			.get(URL, { headers: { Authorization: `Bearer ${sessionInfo.token}` } })
+			.then(({ data }) => {
+				console.log(data);
+				setActiveDays(data.map((entry) => entry.day));
+			})
+			.catch((err) => console.error(err));
+	}, []);
 
 	return (
-		<main>
+		<Main>
 			<Header imgUrl={sessionInfo.image} />
-			History page
+			<CalendarWrapper>
+				<Calendar onChange={setToday} value={today} tileClassName={getTileClassName} />
+			</CalendarWrapper>
 			<Footer />
-		</main>
+		</Main>
 	);
+
+	function getTileClassName({ date, view }) {
+		if (view !== 'month') return '';
+		const day = activeDays.find((habitDay) => habitDay === dayjs(date).format('DD/MM/YYYY'));
+		if (day) return day.done ? 'complete' : 'incomplete';
+	}
 }
+
+const Main = styled.main`
+	position: relative;
+	overflow-y: scroll;
+	height: 100%;
+`;
+
+const CalendarWrapper = styled.div`
+	height: 100%;
+	position: absolute;
+
+	* {
+		border-radius: var(--border-radius-1);
+	}
+
+	.react-calendar {
+		margin: 0 auto;
+		width: 85%;
+		border: none;
+		border-radius: var(--border-radius-2);
+		box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+
+		.complete {
+			background-color: var(--green-done);
+			color: #fff;
+		}
+
+		.incomplete {
+			background-color: var(--red-incomplete);
+			color: #fff;
+		}
+
+		&__month-view__days__day {
+			border-radius: 50%;
+			max-width: 35px;
+			min-height: 35px;
+			margin: 5px;
+		}
+
+		&__tile--now {
+			background-color: var(--blue-light) !important ;
+
+			color: #fff !important;
+		}
+
+		&__tile--active {
+			background-color: var(--blue-dark) !important;
+		}
+	}
+`;

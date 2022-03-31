@@ -11,6 +11,7 @@ const AppTheme = createGlobalStyle`
 		--gray-background: #e5e5e5;
 		--gray-disabled: #f2f2f2;
 		--green-done: #8fc549;
+		--red-incomplete: #EA5766;
 		--text-light: #fff;
 		--text-disabled: #AFAFAF;
 
@@ -23,6 +24,7 @@ const AppTheme = createGlobalStyle`
 		--footer-height: 12vh;
 
 		--border-radius-1: 5px;
+		--border-radius-2: 10px;
 		--font-size-1: 14px;
 		--font-size-2: 16px;
 		--font-size-3: 18px;
