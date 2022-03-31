@@ -27,37 +27,38 @@ export default function Habits() {
 	}, [sessionInfo, habitChanged]);
 
 	return (
-		<Main>
+		<>
 			<Header imgUrl={sessionInfo.image} />
-			<MyHabitsTitle>
-				<h1>My Habits</h1>
-				<img onClick={addNewHabit} src={plusIcon} alt="add habit" />
-			</MyHabitsTitle>
-			{newHabits.map((habit, index) => (
-				<NewHabit
-					id={index}
-					removeHabit={removeNewHabit}
-					announceSave={announceChange}
-					key={habit}
-				/>
-			))}
-			{habits.length === 0 && (
-				<Paragraph>
-					You haven't added any habits yet. Add a habit to start tracking!
-				</Paragraph>
-			)}
-			{habits.map((habit) => (
-				<HabitCard
-					name={habit.name}
-					days={habit.days}
-					id={habit.id}
-					announceDelete={announceChange}
-					key={habit.id}
-				/>
-			))}
-
+			<Main>
+				<MyHabitsTitle>
+					<h1>My Habits</h1>
+					<img onClick={addNewHabit} src={plusIcon} alt="add habit" />
+				</MyHabitsTitle>
+				{newHabits.map((habit, index) => (
+					<NewHabit
+						id={index}
+						removeHabit={removeNewHabit}
+						announceSave={announceChange}
+						key={habit}
+					/>
+				))}
+				{habits.length === 0 && (
+					<Paragraph>
+						You haven't added any habits yet. Add a habit to start tracking!
+					</Paragraph>
+				)}
+				{habits.map((habit) => (
+					<HabitCard
+						name={habit.name}
+						days={habit.days}
+						id={habit.id}
+						announceDelete={announceChange}
+						key={habit.id}
+					/>
+				))}
+			</Main>
 			<Footer />
-		</Main>
+		</>
 	);
 
 	function addNewHabit() {

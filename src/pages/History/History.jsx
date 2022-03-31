@@ -23,13 +23,15 @@ export default function History() {
 	}, [sessionInfo]);
 
 	return (
-		<Main>
+		<>
 			<Header imgUrl={sessionInfo.image} />
-			<CalendarWrapper>
-				<Calendar onChange={setToday} value={today} tileClassName={getTileClassName} />
-			</CalendarWrapper>
+			<Main>
+				<CalendarWrapper>
+					<Calendar onChange={setToday} value={today} tileClassName={getTileClassName} />
+				</CalendarWrapper>
+			</Main>
 			<Footer />
-		</Main>
+		</>
 	);
 
 	function getTileClassName({ date, view }) {
