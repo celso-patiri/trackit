@@ -28,17 +28,19 @@ export default function History() {
 			<Header imgUrl={sessionInfo.image} />
 			<Main>
 				<CalendarWrapper>
-					<Calendar onChange={setToday} value={today} tileClassName={getTileClassName} />
+					<Calendar onChange={setToday} value={today} tileClassName={getDateDoneStatus} />
 				</CalendarWrapper>
 			</Main>
 			<Footer />
 		</>
 	);
 
-	function getTileClassName({ date, view }) {
+	function getDateDoneStatus({ date, view }) {
 		if (view !== 'month') return '';
-		const currentDay = daysWithHabits.find((day) => day === dayjs(date).format('DD/MM/YYYY'));
-		if (currentDay) return currentDay.done ? 'complete' : 'incomplete';
+		const dateHasHabits = daysWithHabits.find(
+			(day) => day === dayjs(date).format('DD/MM/YYYY')
+		);
+		if (dateHasHabits) return dateHasHabits.done ? 'complete' : 'incomplete';
 	}
 }
 
