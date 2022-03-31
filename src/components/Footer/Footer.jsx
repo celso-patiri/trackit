@@ -26,4 +26,10 @@ const StyledFooter = styled.footer`
 	background-color: #fff;
 	padding: 5px 25px;
 	font-size: var(--font-size-3);
+	box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.1);
+
+	svg {
+		border-radius: 50%;
+		box-shadow: -1px -2px 4px rgba(0, 0, 0, 0.3);
+	}
 `;
