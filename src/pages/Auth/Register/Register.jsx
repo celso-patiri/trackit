@@ -14,7 +14,9 @@ export default function Register() {
 	const { sessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
 
-	if (sessionInfo.token) navigate('/habits');
+	useEffect(() => {
+		if (sessionInfo.token) navigate('/habits');
+	});
 
 	return (
 		<FormContainer>
