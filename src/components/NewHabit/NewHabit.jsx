@@ -8,7 +8,7 @@ import DayCheckbox from '../DayCheckbox/DayCheckbox';
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-export default function NewHabit({ removeHabit, id }) {
+export default function NewHabit({ removeHabit, id, announceSave }) {
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 	const [habitName, setHabitName] = useState('');
 	const [selectedDays, setSelectedDays] = useState([]);
@@ -77,6 +77,7 @@ export default function NewHabit({ removeHabit, id }) {
 			)
 			.then((res) => {
 				removeHabit(id);
+				announceSave();
 			})
 			.catch((err) => {
 				console.error(err);

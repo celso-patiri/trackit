@@ -13,8 +13,7 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 export default function Habits() {
 	const [habits, setHabits] = useState([]);
 	const [newHabits, setNewHabits] = useState([]);
-	const [newHabitKey, setNewHabitKey] = useState(0);
-
+	const [newHabitSaved, setNewHabitSaved] = useState(false);
 	const { sessionInfo } = useContext(SessionContext);
 
 	useEffect(() => {
@@ -24,11 +23,7 @@ export default function Habits() {
 			})
 			.then(({ data }) => setHabits(data))
 			.catch((err) => console.error(err));
-	}, [sessionInfo, newHabits]);
-
-	// console.log(sessionInfo);
-	// console.log(newHabits);
-	// console.log(habits);
+	}, [sessionInfo, newHabitSaved]);
 
 	return (
 		<Main>
@@ -38,7 +33,12 @@ export default function Habits() {
 				<img onClick={addHabit} src={plusIcon} alt="add habit" />
 			</MyHabitsTitle>
 			{newHabits.map((habit, index) => (
-				<NewHabit id={index} removeHabit={removeHabit} key={habit} />
+				<NewHabit
+					id={index}
+					removeHabit={removeHabit}
+					announceSave={announceSave}
+					key={habit}
+				/>
 			))}
 			{habits.length === 0 && (
 				<Paragraph>
@@ -54,13 +54,16 @@ export default function Habits() {
 	);
 
 	function addHabit() {
-		newHabits.push(newHabitKey);
-		setNewHabitKey(newHabitKey + 1);
+		newHabits.push(newHabits.length);
 		setNewHabits([...newHabits]);
 	}
 
 	function removeHabit(index) {
 		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
+	}
+
+	function announceSave() {
+		setNewHabitSaved(!newHabitSaved);
 	}
 }
 
