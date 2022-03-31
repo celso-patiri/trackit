@@ -2,7 +2,7 @@
   
  
   
-  <a href="https://github.com/celso-patiri/trackit/">
+  <a href="https://celso-trackit.netlify.app/" target="_blank">
     <img src="https://github.com/celso-patiri/trackit/blob/master/src/assets/img/logo.png" alt="Logo" width="200">
   </a>
   
