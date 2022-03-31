@@ -35,6 +35,7 @@ export default function History() {
 		</>
 	);
 
+	//Calendar date classNames
 	function getDateDoneStatus({ date, view }) {
 		if (view !== 'month') return '';
 		const dateHasHabits = daysWithHabits.find(
