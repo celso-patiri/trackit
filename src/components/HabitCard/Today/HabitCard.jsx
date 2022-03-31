@@ -1,22 +1,48 @@
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
-
 import checkIcon from '../../../assets/img/check.png';
+import SessionContext from '../../../context/SessionContext';
 
-export default function HabitCard({ name, streak, record, done }) {
+export default function HabitCard({ name, streak, record, done, id, annouceToggle }) {
+	const { sessionInfo } = useContext(SessionContext);
+	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
+
 	return (
-		<Card>
+		<Card onClick={postCheckToggle}>
 			<Content>
 				<h1>{name}</h1>
 				<h3>
-					Current streak: <Highlight done={done}>{streak} days</Highlight>
+					Current streak: <Highlight active={done}>{streak} days</Highlight>
 				</h3>
 				<h3>
-					Personal record: <Highlight done={done}>{record} days</Highlight>
+					Personal record:{' '}
+					<Highlight active={done && streak >= record}>{record} days</Highlight>
 				</h3>
 			</Content>
 			<Icon src={checkIcon} done={done} alt="check" />
 		</Card>
 	);
+
+	function postCheckToggle() {
+		if (isProcessingRequest) return;
+
+		const action = done ? 'uncheck' : 'check';
+		const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${action}`;
+
+		setIsProcessingRequest(true);
+		axios
+			.post(
+				url,
+				{},
+				{
+					headers: { Authorization: `Bearer ${sessionInfo.token}` },
+				}
+			)
+			.then(annouceToggle)
+			.catch((err) => console.error(err))
+			.finally(() => setIsProcessingRequest(false));
+	}
 }
 
 const Card = styled.section`
@@ -46,7 +72,7 @@ const Content = styled.div`
 `;
 
 const Highlight = styled.span`
-	color: ${({ done }) => (done ? 'var(--green-done)' : 'var(--gray-dark)')};
+	color: ${({ active }) => (active ? 'var(--green-done)' : 'var(--gray-dark)')};
 `;
 
 const Icon = styled.img`

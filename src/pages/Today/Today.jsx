@@ -13,6 +13,7 @@ const dayjs = require('dayjs');
 export default function Today() {
 	const [habits, setHabits] = useState([]);
 	const { sessionInfo } = useContext(SessionContext);
+	const [habitToggled, setHabitToggled] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -22,27 +23,39 @@ export default function Today() {
 			})
 			.then(({ data }) => setHabits(data))
 			.catch((err) => console.error(err));
-	}, [sessionInfo]);
+	}, [sessionInfo, habitToggled]);
+
+	const habitsDone = habits.reduce((sum, habit) => (sum + habit.done ? 1 : 0), 0);
+	const percentageDone = (habitsDone / habits.length) * 100;
 
 	return (
 		<Main>
 			<Header imgUrl={sessionInfo.image} />
-			<Title>
+
+			<Title active={percentageDone > 0}>
 				<h1>{dayjs().format('dddd, DD/MM')}</h1>
-				<h3>Nenhum hábito concluido ainda</h3>
+				{percentageDone > 0 ? (
+					<h3>{percentageDone}% done today</h3>
+				) : (
+					<h3>No habit done yet</h3>
+				)}
 			</Title>
+
 			{habits.length === 0 && (
 				<NoHabitsMessage>
 					<p>Looks like you haven't got any habits planned for today.</p>
 					<button onClick={() => navigate('/habits')}>Go to Habits</button>
 				</NoHabitsMessage>
 			)}
+
 			{habits.map((habit) => (
 				<HabitCard
 					name={habit.name}
 					streak={habit.currentSequence}
 					record={habit.highestSequence}
 					done={habit.done}
+					id={habit.id}
+					annouceToggle={toggleHabit}
 					key={habit.id}
 				/>
 			))}
@@ -50,6 +63,10 @@ export default function Today() {
 			<Footer />
 		</Main>
 	);
+
+	function toggleHabit() {
+		setHabitToggled(!habitToggled);
+	}
 }
 
 const Main = styled.main``;
@@ -65,7 +82,7 @@ const Title = styled.div`
 
 	h3 {
 		font-size: var(--font-size-2);
-		color: var(--gray-light);
+		color: ${({ active }) => (active ? 'var(--green-done)' : 'var(--gray-light)')};
 	}
 `;
 
