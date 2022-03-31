@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 
-export default function DayCheckbox({ day, toggle, isChecked }) {
-	return <Checkbox onChange={toggle} day={day} checked={isChecked} type="checkbox" />;
+export default function DayCheckbox({ day, toggle, isChecked, disabled }) {
+	return (
+		<Checkbox
+			onChange={toggle}
+			day={day}
+			checked={isChecked}
+			disabled={disabled}
+			type="checkbox"
+		/>
+	);
 }
 
 const Checkbox = styled.input`
@@ -15,6 +23,7 @@ const Checkbox = styled.input`
 	align-items: center;
 	justify-content: center;
 	margin: 0;
+	background-color: ${({ disabled }) => (disabled ? 'var(--gray-disabled)' : '#fff')};
 
 	-webkit-appearance: none;
 	-moz-appearance: none;
