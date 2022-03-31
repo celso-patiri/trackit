@@ -13,7 +13,7 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 export default function Habits() {
 	const [habits, setHabits] = useState([]);
 	const [newHabits, setNewHabits] = useState([]);
-	const [newHabitSaved, setNewHabitSaved] = useState(false);
+	const [habitChanged, setHabitChanged] = useState(false);
 
 	const { sessionInfo } = useContext(SessionContext);
 
@@ -24,7 +24,7 @@ export default function Habits() {
 			})
 			.then(({ data }) => setHabits(data))
 			.catch((err) => console.error(err));
-	}, [sessionInfo, newHabitSaved]);
+	}, [sessionInfo, habitChanged]);
 
 	return (
 		<Main>
@@ -37,7 +37,7 @@ export default function Habits() {
 				<NewHabit
 					id={index}
 					removeHabit={removeNewHabit}
-					announceSave={announceSave}
+					announceSave={announceChange}
 					key={habit}
 				/>
 			))}
@@ -47,7 +47,13 @@ export default function Habits() {
 				</Paragraph>
 			)}
 			{habits.map((habit) => (
-				<HabitCard name={habit.name} days={habit.days} id={habit.id} key={habit.id} />
+				<HabitCard
+					name={habit.name}
+					days={habit.days}
+					id={habit.id}
+					announceDelete={announceChange}
+					key={habit.id}
+				/>
 			))}
 
 			<Footer />
@@ -63,8 +69,8 @@ export default function Habits() {
 		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
 	}
 
-	function announceSave() {
-		setNewHabitSaved(!newHabitSaved);
+	function announceChange() {
+		setHabitChanged(!habitChanged);
 	}
 }
 

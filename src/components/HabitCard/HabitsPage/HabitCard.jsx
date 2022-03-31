@@ -8,8 +8,8 @@ import axios from 'axios';
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-export default function HabitCard({ name, days, id }) {
-	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
+export default function HabitCard({ name, days, id, announceDelete }) {
+	const { sessionInfo } = useContext(SessionContext);
 
 	return (
 		<Card>
@@ -34,7 +34,7 @@ export default function HabitCard({ name, days, id }) {
 				headers: { Authorization: `Bearer ${sessionInfo.token}` },
 				data: { id, name, days },
 			})
-			.then((res) => setSessionInfo({ ...sessionInfo }))
+			.then(announceDelete)
 			.catch((err) => console.error(err));
 	}
 }
