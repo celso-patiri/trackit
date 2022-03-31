@@ -20,7 +20,7 @@ export default function History() {
 			.get(URL, { headers: { Authorization: `Bearer ${sessionInfo.token}` } })
 			.then(({ data }) => setActiveDays(data.map((entry) => entry.day)))
 			.catch((err) => console.error(err));
-	}, []);
+	}, [sessionInfo]);
 
 	return (
 		<Main>
