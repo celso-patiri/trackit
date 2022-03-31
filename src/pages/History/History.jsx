@@ -55,9 +55,7 @@ const CalendarWrapper = styled.div`
 
 	.react-calendar {
 		margin: 0 auto;
-		width: 85%;
 		border: none;
-		/* border-radius: var(--border-radius-2); */
 		box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
 
 		.complete {
@@ -71,9 +69,9 @@ const CalendarWrapper = styled.div`
 		}
 
 		&__month-view__days__day {
-			border-radius: 12px;
-			max-width: 29px;
-			max-height: 29px;
+			border-radius: 14px;
+			max-width: 34px;
+			max-height: 34px;
 			margin: 8px;
 			display: flex;
 			justify-content: center;
@@ -82,7 +80,6 @@ const CalendarWrapper = styled.div`
 
 		&__tile--now {
 			background-color: var(--blue-light) !important ;
-
 			color: #fff !important;
 		}
 
