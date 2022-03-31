@@ -6,7 +6,7 @@ import plusIcon from '../../assets/img/plus.png';
 import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 import NewHabit from '../../components/NewHabit/NewHabit';
-import HabitCard from '../../components/HabitCard/Habits/HabitCard';
+import HabitCard from '../../components/HabitCard/HabitsPage/HabitCard';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
@@ -14,6 +14,7 @@ export default function Habits() {
 	const [habits, setHabits] = useState([]);
 	const [newHabits, setNewHabits] = useState([]);
 	const [newHabitSaved, setNewHabitSaved] = useState(false);
+
 	const { sessionInfo } = useContext(SessionContext);
 
 	useEffect(() => {
@@ -30,12 +31,12 @@ export default function Habits() {
 			<Header imgUrl={sessionInfo.image} />
 			<MyHabitsTitle>
 				<h1>My Habits</h1>
-				<img onClick={addHabit} src={plusIcon} alt="add habit" />
+				<img onClick={addNewHabit} src={plusIcon} alt="add habit" />
 			</MyHabitsTitle>
 			{newHabits.map((habit, index) => (
 				<NewHabit
 					id={index}
-					removeHabit={removeHabit}
+					removeHabit={removeNewHabit}
 					announceSave={announceSave}
 					key={habit}
 				/>
@@ -53,12 +54,12 @@ export default function Habits() {
 		</Main>
 	);
 
-	function addHabit() {
+	function addNewHabit() {
 		newHabits.push(newHabits.length);
 		setNewHabits([...newHabits]);
 	}
 
-	function removeHabit(index) {
+	function removeNewHabit(index) {
 		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
 	}
 

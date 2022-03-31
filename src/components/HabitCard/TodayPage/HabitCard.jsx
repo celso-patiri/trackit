@@ -9,7 +9,7 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
 	return (
-		<Card onClick={postCheckToggle}>
+		<Card onClick={checkTogglePOST}>
 			<Content>
 				<h1>{name}</h1>
 				<h3>
@@ -24,7 +24,7 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 		</Card>
 	);
 
-	function postCheckToggle() {
+	function checkTogglePOST() {
 		if (isProcessingRequest) return;
 
 		const action = done ? 'uncheck' : 'check';

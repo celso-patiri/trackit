@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
-import HabitCard from '../../components/HabitCard/Today/HabitCard';
+import HabitCard from '../../components/HabitCard/TodayPage/HabitCard';
 import Header from '../../components/Header/Header';
 import SessionContext from '../../context/SessionContext';
 
