@@ -18,10 +18,7 @@ export default function History() {
 	useEffect(() => {
 		axios
 			.get(URL, { headers: { Authorization: `Bearer ${sessionInfo.token}` } })
-			.then(({ data }) => {
-				console.log(data);
-				setActiveDays(data.map((entry) => entry.day));
-			})
+			.then(({ data }) => setActiveDays(data.map((entry) => entry.day)))
 			.catch((err) => console.error(err));
 	}, []);
 
@@ -37,8 +34,8 @@ export default function History() {
 
 	function getTileClassName({ date, view }) {
 		if (view !== 'month') return '';
-		const day = activeDays.find((habitDay) => habitDay === dayjs(date).format('DD/MM/YYYY'));
-		if (day) return day.done ? 'complete' : 'incomplete';
+		const currentDay = activeDays.find((day) => day === dayjs(date).format('DD/MM/YYYY'));
+		if (currentDay) return currentDay.done ? 'complete' : 'incomplete';
 	}
 }
 
@@ -53,14 +50,14 @@ const CalendarWrapper = styled.div`
 	position: absolute;
 
 	* {
-		border-radius: var(--border-radius-1);
+		border-radius: var(--border-radius-2);
 	}
 
 	.react-calendar {
 		margin: 0 auto;
 		width: 85%;
 		border: none;
-		border-radius: var(--border-radius-2);
+		/* border-radius: var(--border-radius-2); */
 		box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
 
 		.complete {
@@ -74,10 +71,13 @@ const CalendarWrapper = styled.div`
 		}
 
 		&__month-view__days__day {
-			border-radius: 50%;
-			max-width: 35px;
-			min-height: 35px;
-			margin: 5px;
+			border-radius: 12px;
+			max-width: 29px;
+			max-height: 29px;
+			margin: 8px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		&__tile--now {
