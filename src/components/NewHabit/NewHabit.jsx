@@ -116,7 +116,7 @@ const Buttons = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-self: flex-end;
-	margin-top: 10%;
+	margin-top: 10px;
 	width: 50%;
 	gap: 20px;
 
