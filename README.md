@@ -3,7 +3,7 @@
  
   
   <a href="https://celso-trackit.netlify.app/" target="_blank">
-    <img src="https://github.com/celso-patiri/trackit/blob/master/src/assets/img/logo.png" alt="Logo" width="200">
+    <img src="https://github.com/celso-patiri/trackit/blob/master/src/assets/logo.png" alt="Logo" width="200">
   </a>
   
   [![wakatime](https://wakatime.com/badge/user/8a52c0fd-ec78-403a-81d0-07c674c564b3/project/afd27a18-548a-4b06-826f-df5b06286bf1.svg)](https://wakatime.com/badge/user/8a52c0fd-ec78-403a-81d0-07c674c564b3/project/afd27a18-548a-4b06-826f-df5b06286bf1)
