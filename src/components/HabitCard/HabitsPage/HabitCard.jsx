@@ -18,7 +18,7 @@ export default function HabitCard({ name, days, id, announceDelete }) {
 			<Days>
 				{WEEKDAYS.map((day, index) => (
 					<DayCheckbox
-						day={day}
+						weekDay={day}
 						isChecked={days.includes(index)}
 						key={day + index}
 						toggle={preventToggle}

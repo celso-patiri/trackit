@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 
-export default function DayCheckbox({ weekDay, toggle, disabled }) {
+export default function DayCheckbox({ weekDay, toggle, isChecked, disabled }) {
 	return (
-		<CheckboxInput onChange={toggle} weekday={weekDay} type="checkbox" disabled={disabled} />
+		<Checkbox
+			onChange={toggle}
+			weekday={weekDay}
+			checked={isChecked}
+			disabled={disabled}
+			type="checkbox"
+		/>
 	);
 }
 
-const CheckboxInput = styled.input`
+const Checkbox = styled.input`
 	width: 30px;
 	height: 30px;
 	font-size: var(--font-size-3);
@@ -24,7 +30,7 @@ const CheckboxInput = styled.input`
 	appearance: none;
 
 	&::after {
-		content: '${(props) => props.day}';
+		content: '${(props) => props.weekday}';
 	}
 
 	&:checked {
