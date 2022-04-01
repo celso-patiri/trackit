@@ -47,6 +47,7 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 
 const Card = styled.section`
 	width: 100%;
+	max-width: 500px;
 	height: 20vh;
 	background-color: #fff;
 	border-radius: var(--border-radius-1);

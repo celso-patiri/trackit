@@ -55,6 +55,7 @@ const HabitName = styled.h1`
 
 const Card = styled.div`
 	width: 100%;
+	max-width: 500px;
 	height: 20vh;
 	background-color: ${({ disabled }) => (disabled ? 'var(--gray-disabled)' : '#fff')};
 	border-radius: var(--border-radius-1);

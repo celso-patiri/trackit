@@ -7,7 +7,7 @@ const FormContainer = styled.main`
 `;
 
 const Logo = styled.img`
-	width: 60%;
+	width: clamp(100px, 60%, 300px);
 `;
 
 const Form = styled.form`

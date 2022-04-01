@@ -15,11 +15,11 @@ const AppTheme = createGlobalStyle`
 		--text-light: #fff;
 		--text-disabled: #AFAFAF;
 
-
 		--input-border: 2px solid var(--gray-light);
-		--input-width: 70%;
+		--input-width: clamp(100px, 70%, 300px); 
 		--input-heigth: 7vh;	
 		
+
 		--header-height: 12vh;
 		--footer-height: 12vh;
 
