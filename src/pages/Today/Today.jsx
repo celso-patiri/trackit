@@ -12,15 +12,12 @@ export default function Today() {
 	const { userData, fetchTodayData } = useContext(UserContext);
 	const navigate = useNavigate();
 
-	const [todayHabits, setTodayHabits] = useState(userData.today);
-	const [doneToggle, toggleHabitDone] = useState(false);
+	const [toggle, toggleHabitDone] = useState(false);
+	const announceToggle = () => toggleHabitDone(!toggle);
 
-	const updateTodayHabits = () => setTodayHabits(userData.today);
-	const announceToggle = () => toggleHabitDone(!doneToggle);
+	useEffect(fetchTodayData, [toggle, fetchTodayData]);
 
-	useEffect(fetchTodayData, [doneToggle, fetchTodayData]);
-	useEffect(updateTodayHabits, [userData]);
-
+	const todayHabits = userData.today;
 	const habitsDoneToday = todayHabits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
 	const percentageDone = Math.ceil((habitsDoneToday / todayHabits.length) * 100);
 
