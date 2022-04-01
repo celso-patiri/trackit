@@ -26,7 +26,7 @@ export default function History() {
 			.catch(console.error);
 
 		return () => (isMounted = false);
-	}, [userData]);
+	}, [userData.token]);
 
 	return (
 		<>
