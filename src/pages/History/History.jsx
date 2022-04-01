@@ -13,7 +13,7 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/h
 export default function History() {
 	const { userData } = useContext(UserContext);
 
-	const [daysWithHabits, setDayswithHabits] = useState([]);
+	const [daysWithHabits, setDaysWithHabits] = useState([]);
 	const [today, setToday] = useState(new Date());
 
 	useEffect(() => {
@@ -21,7 +21,7 @@ export default function History() {
 		axios
 			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
 			.then(({ data }) => {
-				if (isMounted) setDayswithHabits(data.map((entry) => entry.day));
+				if (isMounted) setDaysWithHabits(data.map((entry) => entry.day));
 			})
 			.catch(console.error);
 
