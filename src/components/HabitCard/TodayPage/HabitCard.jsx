@@ -58,7 +58,7 @@ const Card = styled.section`
 	height: 20vh;
 	background-color: #fff;
 	border-radius: var(--border-radius-1);
-	margin: 2vh 0;
+	margin-top: 1vh;
 	display: flex;
 	justify-content: space-between;
 	padding: 15px;
