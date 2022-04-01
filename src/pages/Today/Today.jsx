@@ -1,39 +1,29 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
 import HabitCard from '../../components/HabitCard/TodayPage/HabitCard';
 import Header from '../../components/Header/Header';
-import SessionContext from '../../context/SessionContext';
+import UserContext from '../../context/UserContext';
 
-const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
 const dayjs = require('dayjs');
 
 export default function Today() {
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData, fetchTodayData } = useContext(UserContext);
 	const navigate = useNavigate();
 
-	const [habits, setHabits] = useState([]);
-	const [toggle, toggleHabit] = useState(false);
+	const [toggle, toggleHabitDone] = useState(false);
+	const announceToggle = () => toggleHabitDone(!toggle);
 
-	const announceToggle = () => toggleHabit(!toggle);
+	useEffect(fetchTodayData, [toggle, fetchTodayData]);
 
-	useEffect(() => {
-		axios
-			.get(URL, {
-				headers: { Authorization: `Bearer ${sessionInfo.token}` },
-			})
-			.then(({ data }) => setHabits(data))
-			.catch(console.error);
-	}, [sessionInfo, toggle]);
-
-	const habitsDoneToday = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
-	const percentageDone = Math.ceil((habitsDoneToday / habits.length) * 100);
+	const todayHabits = userData.today;
+	const habitsDoneToday = todayHabits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
+	const percentageDone = Math.ceil((habitsDoneToday / todayHabits.length) * 100);
 
 	return (
 		<>
-			<Header imgUrl={sessionInfo.image} />
+			<Header imgUrl={userData.image} />
 			<main>
 				<Title active={percentageDone > 0}>
 					<h1>{dayjs().format('dddd, DD/MM')}</h1>
@@ -44,14 +34,14 @@ export default function Today() {
 					)}
 				</Title>
 
-				{habits.length === 0 && (
+				{todayHabits.length === 0 && (
 					<NoHabitsMessage>
 						<p>Looks like you haven't got any habits planned for today.</p>
 						<button onClick={() => navigate('/habits')}>Go to Habits</button>
 					</NoHabitsMessage>
 				)}
 
-				{habits.map((habit) => (
+				{todayHabits.map((habit) => (
 					<HabitCard
 						name={habit.name}
 						streak={habit.currentSequence}

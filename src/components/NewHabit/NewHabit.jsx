@@ -2,14 +2,14 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import styled from 'styled-components';
-import SessionContext from '../../context/SessionContext';
+import UserContext from '../../context/UserContext';
 import DayCheckbox from '../DayCheckbox/DayCheckbox';
 
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
 export default function NewHabit({ closeHabit, id, announceSave }) {
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData } = useContext(UserContext);
 
 	const [habitName, setHabitName] = useState('');
 	const [selectedDays, setSelectedDays] = useState([]);
@@ -40,7 +40,7 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 					days: selectedDays,
 				},
 				{
-					headers: { Authorization: `Bearer ${sessionInfo.token}` },
+					headers: { Authorization: `Bearer ${userData.token}` },
 				}
 			)
 			.then((res) => {

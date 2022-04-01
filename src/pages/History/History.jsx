@@ -6,26 +6,26 @@ import 'react-calendar/dist/Calendar.css';
 import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
-import SessionContext from '../../context/SessionContext';
+import UserContext from '../../context/UserContext';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily';
 
 export default function History() {
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData } = useContext(UserContext);
 
 	const [daysWithHabits, setDayswithHabits] = useState([]);
 	const [today, setToday] = useState(new Date());
 
 	useEffect(() => {
 		axios
-			.get(URL, { headers: { Authorization: `Bearer ${sessionInfo.token}` } })
+			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
 			.then(({ data }) => setDayswithHabits(data.map((entry) => entry.day)))
 			.catch(console.error);
-	}, [sessionInfo]);
+	}, [userData]);
 
 	return (
 		<>
-			<Header imgUrl={sessionInfo.image} />
+			<Header imgUrl={userData.image} />
 			<Main>
 				<CalendarWrapper>
 					<Calendar onChange={setToday} value={today} tileClassName={getDateDoneStatus} />

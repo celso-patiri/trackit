@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Today from './pages/Today/Today';
 import AppTheme from './styles/__theme';
-import { SessionProvider } from './context/SessionContext';
+import { UserProvider } from './context/UserContext';
 import Register from './pages/Auth/Register/Register';
 import Login from './pages/Auth/Login/Login';
 import Habits from './pages/Habits/Habits';
@@ -9,7 +9,7 @@ import History from './pages/History/History';
 
 function App() {
 	return (
-		<SessionProvider>
+		<UserProvider>
 			<div className="App">
 				<AppTheme />
 				<Routes>
@@ -20,7 +20,7 @@ function App() {
 					<Route path="/history" element={<History />} />
 				</Routes>
 			</div>
-		</SessionProvider>
+		</UserProvider>
 	);
 }
 

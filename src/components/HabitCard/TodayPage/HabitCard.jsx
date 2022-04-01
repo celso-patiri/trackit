@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import checkIcon from '../../../assets/img/check.png';
-import SessionContext from '../../../context/SessionContext';
+import UserContext from '../../../context/UserContext';
 
 export default function HabitCard({ name, streak, record, done, id, annouceToggle }) {
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData } = useContext(UserContext);
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
 	return (
@@ -36,7 +36,7 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 				url,
 				{},
 				{
-					headers: { Authorization: `Bearer ${sessionInfo.token}` },
+					headers: { Authorization: `Bearer ${userData.token}` },
 				}
 			)
 			.then(annouceToggle)

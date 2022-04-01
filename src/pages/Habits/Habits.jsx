@@ -6,12 +6,12 @@ import Footer from '../../components/Footer/Footer';
 import HabitCard from '../../components/HabitCard/HabitsPage/HabitCard';
 import Header from '../../components/Header/Header';
 import NewHabit from '../../components/NewHabit/NewHabit';
-import SessionContext from '../../context/SessionContext';
+import UserContext from '../../context/UserContext';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
 export default function Habits() {
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData } = useContext(UserContext);
 
 	const [habits, setHabits] = useState([]);
 	const [newHabits, setNewHabits] = useState([]);
@@ -21,11 +21,11 @@ export default function Habits() {
 	useEffect(() => {
 		axios
 			.get(URL, {
-				headers: { Authorization: `Bearer ${sessionInfo.token}` },
+				headers: { Authorization: `Bearer ${userData.token}` },
 			})
 			.then(({ data }) => setHabits(data))
 			.catch((err) => console.error(err));
-	}, [sessionInfo, habitChange]);
+	}, [userData, habitChange]);
 
 	const announceNewHabit = () => {
 		newHabits.push(newHabits.length);
@@ -40,7 +40,7 @@ export default function Habits() {
 
 	return (
 		<>
-			<Header imgUrl={sessionInfo.image} />
+			<Header imgUrl={userData.image} />
 			<Main>
 				<MyHabitsTitle>
 					<h1>My Habits</h1>
