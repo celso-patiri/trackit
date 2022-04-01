@@ -25,7 +25,6 @@ export default function HabitCard({ name, days, id, announceDelete }) {
 					/>
 				))}
 			</Days>
-			{/* <Trashcan onClick={deleteHabit} src={trashcan} alt="delete" /> */}
 			<TrashCan deleteHabit={deleteHabit} />
 		</Card>
 	);
