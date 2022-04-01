@@ -5,59 +5,29 @@ import styled from 'styled-components';
 import SessionContext from '../../context/SessionContext';
 import DayCheckbox from '../DayCheckbox/DayCheckbox';
 
-const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
-export default function NewHabit({ removeHabit, id, announceSave }) {
-	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const [habitName, setHabitName] = useState('');
-	const [selectedDays, setSelectedDays] = useState([]);
-
+export default function NewHabit({ closeHabit, id, announceSave }) {
 	const { sessionInfo } = useContext(SessionContext);
 
-	return (
-		<HabitForm>
-			<NameInput
-				value={habitName}
-				onChange={handleInput}
-				type="text"
-				placeholder="Habit name"
-				required
-				disabled={isProcessingRequest}
-			/>
-			<Days>
-				{WEEKDAYS.map((day, index) => (
-					<DayCheckbox
-						day={day}
-						toggle={() => selectDay(index)}
-						disabled={isProcessingRequest}
-						key={day + index}
-					/>
-				))}
-			</Days>
-			<Buttons>
-				<Cancel onClick={handleCancel}>Cancel</Cancel>
-				<Save onClick={handleSave}>
-					{isProcessingRequest ? (
-						<ThreeDots color="#FFF" height={70} width={70} />
-					) : (
-						'Save'
-					)}
-				</Save>
-			</Buttons>
-		</HabitForm>
-	);
+	const [habitName, setHabitName] = useState('');
+	const [selectedDays, setSelectedDays] = useState([]);
+	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
-	function handleInput(e) {
-		setHabitName(e.target.value);
-	}
+	const handleInput = (e) => setHabitName(e.target.value);
 
-	function handleCancel(e) {
+	const handleCancel = (e) => {
 		e.preventDefault();
-		if (!isProcessingRequest) removeHabit(id);
-	}
+		if (!isProcessingRequest) closeHabit(id);
+	};
 
-	function handleSave(e) {
+	const selectDay = (weekDay) => {
+		selectedDays.push(weekDay);
+		setSelectedDays([...selectedDays]);
+	};
+
+	const saveHabit = (e) => {
 		e.preventDefault();
 		if (habitName.length === 0 || isProcessingRequest) return;
 
@@ -70,25 +40,48 @@ export default function NewHabit({ removeHabit, id, announceSave }) {
 					days: selectedDays,
 				},
 				{
-					headers: {
-						Authorization: `Bearer ${sessionInfo.token}`,
-					},
+					headers: { Authorization: `Bearer ${sessionInfo.token}` },
 				}
 			)
 			.then((res) => {
-				removeHabit(id);
+				closeHabit(id);
 				announceSave();
 			})
-			.catch((err) => {
-				console.error(err);
-				setIsProcessingRequest(false);
-			});
-	}
+			.catch((err) => setIsProcessingRequest(false));
+	};
 
-	function selectDay(index) {
-		selectedDays.push(index);
-		setSelectedDays([...selectedDays]);
-	}
+	return (
+		<HabitForm>
+			<NameInput
+				value={habitName}
+				onChange={handleInput}
+				type="text"
+				placeholder="Habit name"
+				required
+				disabled={isProcessingRequest}
+			/>
+			<Days>
+				{WEEKDAYS.map((weekDay, index) => (
+					<DayCheckbox
+						weekDay={weekDay}
+						toggle={() => selectDay(index)}
+						disabled={isProcessingRequest}
+						key={weekDay + index}
+					/>
+				))}
+			</Days>
+			<Buttons>
+				<Cancel onClick={handleCancel}>Cancel</Cancel>
+				<Save onClick={saveHabit}>
+					{isProcessingRequest ? (
+						<ThreeDots color="#FFF" height={70} width={70} />
+					) : (
+						'Save'
+					)}
+				</Save>
+			</Buttons>
+		</HabitForm>
+	);
 }
 
 const HabitForm = styled.form`

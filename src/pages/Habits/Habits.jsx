@@ -1,21 +1,22 @@
+import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Header from '../../components/Header/Header';
-import SessionContext from '../../context/SessionContext';
 import plusIcon from '../../assets/img/plus.png';
 import Footer from '../../components/Footer/Footer';
-import axios from 'axios';
-import NewHabit from '../../components/NewHabit/NewHabit';
 import HabitCard from '../../components/HabitCard/HabitsPage/HabitCard';
+import Header from '../../components/Header/Header';
+import NewHabit from '../../components/NewHabit/NewHabit';
+import SessionContext from '../../context/SessionContext';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
 export default function Habits() {
+	const { sessionInfo } = useContext(SessionContext);
+
 	const [habits, setHabits] = useState([]);
 	const [newHabits, setNewHabits] = useState([]);
-	const [habitChanged, setHabitChanged] = useState(false);
 
-	const { sessionInfo } = useContext(SessionContext);
+	const [habitChange, setHabitChange] = useState(false);
 
 	useEffect(() => {
 		axios
@@ -24,7 +25,18 @@ export default function Habits() {
 			})
 			.then(({ data }) => setHabits(data))
 			.catch((err) => console.error(err));
-	}, [sessionInfo, habitChanged]);
+	}, [sessionInfo, habitChange]);
+
+	const announceNewHabit = () => {
+		newHabits.push(newHabits.length);
+		setNewHabits([...newHabits]);
+	};
+
+	const closeNewHabit = (index) => {
+		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
+	};
+
+	const announceChange = () => setHabitChange(!habitChange);
 
 	return (
 		<>
@@ -32,12 +44,12 @@ export default function Habits() {
 			<Main>
 				<MyHabitsTitle>
 					<h1>My Habits</h1>
-					<img onClick={addNewHabit} src={plusIcon} alt="add habit" />
+					<img onClick={announceNewHabit} src={plusIcon} alt="add habit" />
 				</MyHabitsTitle>
 				{newHabits.map((habit, index) => (
 					<NewHabit
 						id={index}
-						removeHabit={removeNewHabit}
+						closeHabit={closeNewHabit}
 						announceSave={announceChange}
 						key={habit}
 					/>
@@ -60,19 +72,6 @@ export default function Habits() {
 			<Footer />
 		</>
 	);
-
-	function addNewHabit() {
-		newHabits.push(newHabits.length);
-		setNewHabits([...newHabits]);
-	}
-
-	function removeNewHabit(index) {
-		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
-	}
-
-	function announceChange() {
-		setHabitChanged(!habitChanged);
-	}
 }
 
 const Main = styled.main`
