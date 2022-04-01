@@ -6,23 +6,23 @@ import HabitCard from '../../components/HabitCard/TodayPage/HabitCard';
 import Header from '../../components/Header/Header';
 import UserContext from '../../context/UserContext';
 
-const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
 const dayjs = require('dayjs');
 
 export default function Today() {
 	const { userData, fetchTodayData } = useContext(UserContext);
 	const navigate = useNavigate();
 
-	const [habits, setHabits] = useState(userData.today);
-	const [toggle, toggleHabit] = useState(false);
+	const [todayHabits, setTodayHabits] = useState(userData.today);
+	const [doneToggle, toggleHabitDone] = useState(false);
 
-	const announceToggle = () => toggleHabit(!toggle);
+	const updateTodayHabits = () => setTodayHabits(userData.today);
+	const announceToggle = () => toggleHabitDone(!doneToggle);
 
-	useEffect(() => fetchTodayData(), [toggle, fetchTodayData]);
-	useEffect(() => setHabits(userData.today), [userData]);
+	useEffect(fetchTodayData, [doneToggle, fetchTodayData]);
+	useEffect(updateTodayHabits, [userData]);
 
-	const habitsDoneToday = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
-	const percentageDone = Math.ceil((habitsDoneToday / habits.length) * 100);
+	const habitsDoneToday = todayHabits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
+	const percentageDone = Math.ceil((habitsDoneToday / todayHabits.length) * 100);
 
 	return (
 		<>
@@ -37,14 +37,14 @@ export default function Today() {
 					)}
 				</Title>
 
-				{habits.length === 0 && (
+				{todayHabits.length === 0 && (
 					<NoHabitsMessage>
 						<p>Looks like you haven't got any habits planned for today.</p>
 						<button onClick={() => navigate('/habits')}>Go to Habits</button>
 					</NoHabitsMessage>
 				)}
 
-				{habits.map((habit) => (
+				{todayHabits.map((habit) => (
 					<HabitCard
 						name={habit.name}
 						streak={habit.currentSequence}
