@@ -17,10 +17,15 @@ export default function History() {
 	const [today, setToday] = useState(new Date());
 
 	useEffect(() => {
+		let isMounted = true;
 		axios
 			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
-			.then(({ data }) => setDayswithHabits(data.map((entry) => entry.day)))
+			.then(({ data }) => {
+				if (isMounted) setDayswithHabits(data.map((entry) => entry.day));
+			})
 			.catch(console.error);
+
+		return () => (isMounted = false);
 	}, [userData]);
 
 	return (

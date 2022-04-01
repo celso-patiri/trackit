@@ -17,10 +17,15 @@ export default function Habits() {
 	const [habitChange, setHabitChange] = useState(false);
 
 	useEffect(() => {
+		let isMounted = true;
 		axios
 			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
-			.then(({ data }) => setHabits(data))
+			.then(({ data }) => {
+				if (isMounted) setHabits(data);
+			})
 			.catch(console.error);
+
+		return () => (isMounted = false);
 	}, [userData.token, habitChange]);
 
 	useEffect(fetchTodayData, [habits, fetchTodayData]);
