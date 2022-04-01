@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import DayCheckbox from '../../DayCheckbox/DayCheckbox';
 import trashcan from '../../../assets/img/trash-can.png';
 import { useContext, useState } from 'react';
-import SessionContext from '../../../context/SessionContext';
+import UserContext from '../../../context/UserContext';
 import axios from 'axios';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
@@ -10,7 +10,7 @@ const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 export default function HabitCard({ name, days, id, announceDelete }) {
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData } = useContext(UserContext);
 
 	return (
 		<Card disabled={isProcessingRequest}>
@@ -35,7 +35,7 @@ export default function HabitCard({ name, days, id, announceDelete }) {
 		setIsProcessingRequest(true);
 		axios
 			.delete(`${URL}/${id}`, {
-				headers: { Authorization: `Bearer ${sessionInfo.token}` },
+				headers: { Authorization: `Bearer ${userData.token}` },
 				data: { id, name, days },
 			})
 			.then(announceDelete)

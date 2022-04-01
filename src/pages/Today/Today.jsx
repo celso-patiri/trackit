@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
 import HabitCard from '../../components/HabitCard/TodayPage/HabitCard';
 import Header from '../../components/Header/Header';
-import SessionContext from '../../context/SessionContext';
+import UserContext from '../../context/UserContext';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
 const dayjs = require('dayjs');
 
 export default function Today() {
-	const { sessionInfo } = useContext(SessionContext);
+	const { userData } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const [habits, setHabits] = useState([]);
@@ -22,18 +22,18 @@ export default function Today() {
 	useEffect(() => {
 		axios
 			.get(URL, {
-				headers: { Authorization: `Bearer ${sessionInfo.token}` },
+				headers: { Authorization: `Bearer ${userData.token}` },
 			})
 			.then(({ data }) => setHabits(data))
 			.catch(console.error);
-	}, [sessionInfo, toggle]);
+	}, [userData, toggle]);
 
 	const habitsDoneToday = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
 	const percentageDone = Math.ceil((habitsDoneToday / habits.length) * 100);
 
 	return (
 		<>
-			<Header imgUrl={sessionInfo.image} />
+			<Header imgUrl={userData.image} />
 			<main>
 				<Title active={percentageDone > 0}>
 					<h1>{dayjs().format('dddd, DD/MM')}</h1>

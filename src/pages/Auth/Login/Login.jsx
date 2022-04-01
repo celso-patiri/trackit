@@ -3,19 +3,20 @@ import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/img/logo.png';
-import SessionContext from '../../../context/SessionContext';
+import UserContext from '../../../context/UserContext';
 import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
 
 export default function Login() {
+	const { userData, setUserData } = useContext(UserContext);
+
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const { sessionInfo, setSessionInfo } = useContext(SessionContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (sessionInfo.token) navigate('/habits');
+		if (userData.token) navigate('/habits');
 	});
 
 	return (
@@ -68,7 +69,7 @@ export default function Login() {
 		axios
 			.post(URL, userInfo)
 			.then((res) => {
-				setSessionInfo(res.data);
+				setUserData(res.data);
 				navigate('/habits');
 			})
 			.catch((err) => {
