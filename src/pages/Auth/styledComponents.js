@@ -37,6 +37,9 @@ const StyledSubmit = styled.button`
 	border: none;
 	border-radius: var(--border-radius-1);
 
+	cursor: pointer;
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.2);
+
 	&:disabled {
 		opacity: 0.7;
 	}

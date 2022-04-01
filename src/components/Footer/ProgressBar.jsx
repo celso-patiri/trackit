@@ -33,4 +33,5 @@ const Container = styled.div`
 	height: 15vh;
 	width: 15vh;
 	margin-bottom: 5vh;
+	cursor: pointer;
 `;

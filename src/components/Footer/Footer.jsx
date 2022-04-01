@@ -28,6 +28,10 @@ const StyledFooter = styled.footer`
 	font-size: var(--font-size-3);
 	box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.1);
 
+	h2 {
+		cursor: pointer;
+	}
+
 	svg {
 		border-radius: 50%;
 		box-shadow: -1px -2px 4px rgba(0, 0, 0, 0.3);
