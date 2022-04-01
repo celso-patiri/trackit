@@ -3,12 +3,10 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 
 const UserContext = createContext({});
 
-const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
+const TODAY_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
 
 export function UserProvider({ children }) {
 	const [userData, setUserData] = useState({});
-
-	console.log(userData);
 
 	const updateTodayData = useCallback((todayData) => {
 		setUserData((prevUserData) => {
@@ -22,7 +20,7 @@ export function UserProvider({ children }) {
 	const fetchTodayData = useCallback(() => {
 		if (userData.token) {
 			axios
-				.get(URL, {
+				.get(TODAY_URL, {
 					headers: { Authorization: `Bearer ${userData.token}` },
 				})
 				.then(({ data }) => updateTodayData(data))
@@ -30,10 +28,7 @@ export function UserProvider({ children }) {
 		}
 	}, [userData.token, updateTodayData]);
 
-	useEffect(() => {
-		console.log('efeito rodou');
-		fetchTodayData();
-	}, [fetchTodayData]);
+	useEffect(fetchTodayData, [fetchTodayData]);
 
 	return (
 		<UserContext.Provider value={{ userData, setUserData, fetchTodayData }}>
