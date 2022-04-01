@@ -18,13 +18,14 @@ export default function History() {
 
 	useEffect(() => {
 		let isMounted = true;
-		axios
-			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
-			.then(({ data }) => {
-				if (isMounted) setDaysWithHabits(data.map((entry) => entry.day));
-			})
-			.catch(console.error);
-
+		if (userData.token) {
+			axios
+				.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
+				.then(({ data }) => {
+					if (isMounted) setDaysWithHabits(data.map((entry) => entry.day));
+				})
+				.catch(console.error);
+		}
 		return () => (isMounted = false);
 	}, [userData.token]);
 

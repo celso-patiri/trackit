@@ -18,13 +18,14 @@ export default function Habits() {
 
 	useEffect(() => {
 		let isMounted = true;
-		axios
-			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
-			.then(({ data }) => {
-				if (isMounted) setHabits(data);
-			})
-			.catch(console.error);
-
+		if (userData.token) {
+			axios
+				.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
+				.then(({ data }) => {
+					if (isMounted) setHabits(data);
+				})
+				.catch(console.error);
+		}
 		return () => (isMounted = false);
 	}, [userData.token, habitChange]);
 
