@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
-import logoImg from '../../../assets/img/logo.png';
+import logoImg from '../../../assets/logo.png';
 import UserContext from '../../../context/UserContext';
 import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
 
