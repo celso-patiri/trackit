@@ -19,7 +19,7 @@ export default function ProgressBar({ navigate }) {
 				background
 				backgroundPadding={6}
 				styles={buildStyles({
-					backgroundColor: '#3e98c7',
+					backgroundColor: percentageDone === 100 ? '#8fc549' : '#3e98c7',
 					textColor: '#fff',
 					pathColor: '#fff',
 					trailColor: 'transparent',
