@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
-import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/logo.png';
 import UserContext from '../../../context/UserContext';
 import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
@@ -9,15 +8,14 @@ import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../s
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
 
 export default function Login() {
-	const { userData, setUserData } = useContext(UserContext);
+	const { userData, setUserSession, navigate } = useContext(UserContext);
 
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (userData.token) navigate('/habits');
-	});
+		if (userData.token) navigate.current('/habits');
+	}, [userData.token]);
 
 	return (
 		<FormContainer>
@@ -64,17 +62,11 @@ export default function Login() {
 
 	function handleSubmit(e) {
 		if (!userInfo.email || !userInfo.password) return;
-
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)
-			.then((res) => {
-				setUserData(res.data);
-				navigate('/habits');
-			})
-			.catch((err) => {
-				setIsProcessingRequest(false);
-				window.alert('pera la meu rei');
-			});
+			.then(({ data }) => setUserSession(data))
+			.catch((err) => window.alert('Invalid credentials'))
+			.finally(() => setIsProcessingRequest(false));
 	}
 }
