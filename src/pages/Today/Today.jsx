@@ -17,7 +17,7 @@ export default function Today() {
 
 	useEffect(fetchTodayData, [toggle, fetchTodayData]);
 
-	const todayHabits = userData.today;
+	const todayHabits = userData.today ? userData.today : [];
 	const habitsDoneToday = todayHabits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
 	const percentageDone = Math.ceil((habitsDoneToday / todayHabits.length) * 100);
 

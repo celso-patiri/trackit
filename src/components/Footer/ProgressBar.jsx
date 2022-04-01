@@ -1,14 +1,20 @@
+import { useContext } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styled from 'styled-components';
-
-const percentage = 66;
+import UserContext from '../../context/UserContext';
 
 export default function ProgressBar({ navigate }) {
+	const { userData } = useContext(UserContext);
+
+	const todayHabits = userData.today ? userData.today : [];
+	const habitsDoneToday = todayHabits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
+	const percentageDone = Math.ceil((habitsDoneToday / todayHabits.length) * 100);
+
 	return (
 		<Container onClick={() => navigate('/today')}>
 			<CircularProgressbar
-				value={percentage}
+				value={percentageDone}
 				text="Today"
 				background
 				backgroundPadding={6}
