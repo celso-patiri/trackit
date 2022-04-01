@@ -38,8 +38,7 @@ export default function HabitCard({ name, days, id, announceDelete }) {
 				data: { id, name, days },
 			})
 			.then(announceDelete)
-			.catch((err) => console.error(err))
-			.finally(setTimeout(() => setIsProcessingRequest(false), 1000));
+			.catch((err) => console.error(err));
 	}
 }
 
@@ -51,8 +50,8 @@ function TrashCan({ deleteHabit }) {
 	return (
 		<TrashcanSvg
 			onClick={deleteHabit}
-			width="13"
-			height="15"
+			width="20"
+			height="20"
 			viewBox="0 0 13 15"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

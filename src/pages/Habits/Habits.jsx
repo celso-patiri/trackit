@@ -10,21 +10,20 @@ import UserContext from '../../context/UserContext';
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
 export default function Habits() {
-	const { userData } = useContext(UserContext);
+	const { userData, fetchTodayData } = useContext(UserContext);
 
 	const [habits, setHabits] = useState([]);
 	const [newHabits, setNewHabits] = useState([]);
-
 	const [habitChange, setHabitChange] = useState(false);
 
 	useEffect(() => {
 		axios
-			.get(URL, {
-				headers: { Authorization: `Bearer ${userData.token}` },
-			})
+			.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
 			.then(({ data }) => setHabits(data))
-			.catch((err) => console.error(err));
-	}, [userData, habitChange]);
+			.catch(console.error);
+	}, [userData.token, habitChange]);
+
+	useEffect(fetchTodayData, [habits, fetchTodayData]);
 
 	const announceNewHabit = () => {
 		newHabits.push(newHabits.length);
