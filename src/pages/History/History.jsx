@@ -75,7 +75,7 @@ const CalendarWrapper = styled.div`
 		}
 
 		&__month-view__days__day {
-			border-radius: 14px;
+			border-radius: 17px;
 			max-width: 34px;
 			max-height: 34px;
 			margin: 8px;
