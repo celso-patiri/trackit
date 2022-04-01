@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,22 +10,16 @@ const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/t
 const dayjs = require('dayjs');
 
 export default function Today() {
-	const { userData } = useContext(UserContext);
+	const { userData, fetchTodayData } = useContext(UserContext);
 	const navigate = useNavigate();
 
-	const [habits, setHabits] = useState([]);
+	const [habits, setHabits] = useState(userData.today);
 	const [toggle, toggleHabit] = useState(false);
 
 	const announceToggle = () => toggleHabit(!toggle);
 
-	useEffect(() => {
-		axios
-			.get(URL, {
-				headers: { Authorization: `Bearer ${userData.token}` },
-			})
-			.then(({ data }) => setHabits(data))
-			.catch(console.error);
-	}, [userData, toggle]);
+	useEffect(() => fetchTodayData(), [toggle, fetchTodayData]);
+	useEffect(() => setHabits(userData.today), [userData]);
 
 	const habitsDoneToday = habits.reduce((sum, habit) => (habit.done ? sum + 1 : sum), 0);
 	const percentageDone = Math.ceil((habitsDoneToday / habits.length) * 100);
