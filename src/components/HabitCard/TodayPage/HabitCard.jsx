@@ -62,6 +62,7 @@ const Card = styled.section`
 	display: flex;
 	justify-content: space-between;
 	padding: 15px;
+	box-shadow: var(--habit-box-shadow);
 `;
 
 const Content = styled.div`

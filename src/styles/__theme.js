@@ -18,7 +18,7 @@ const AppTheme = createGlobalStyle`
 		--input-border: 2px solid var(--gray-light);
 		--input-width: clamp(100px, 70%, 300px); 
 		--input-heigth: 7vh;	
-		
+		--habit-box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.25);
 
 		--header-height: 12vh;
 		--footer-height: 12vh;

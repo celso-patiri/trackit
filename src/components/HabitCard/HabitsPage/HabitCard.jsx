@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserContext from '../../../context/UserContext';
 import DayCheckbox from '../../DayCheckbox/DayCheckbox';
@@ -88,6 +88,7 @@ const Card = styled.div`
 	flex-direction: column;
 	justify-content: space-around;
 	position: relative;
+	box-shadow: var(--habit-box-shadow);
 `;
 
 const Days = styled.div`

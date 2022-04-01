@@ -87,12 +87,14 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 const HabitForm = styled.form`
 	background-color: #fff;
 	width: 100%;
+	max-width: 500px;
 	height: 30vh;
 	border-radius: var(--border-radius-1);
 	margin-top: 2vh;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
+	box-shadow: var(--habit-box-shadow);
 `;
 
 const NameInput = styled.input`
