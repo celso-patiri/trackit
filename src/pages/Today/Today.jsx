@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../../components/Footer/Footer';
 import HabitCard from '../../components/HabitCard/TodayPage/HabitCard';
@@ -9,8 +8,7 @@ import UserContext from '../../context/UserContext';
 const dayjs = require('dayjs');
 
 export default function Today() {
-	const { userData, fetchTodayData } = useContext(UserContext);
-	const navigate = useNavigate();
+	const { userData, fetchTodayData, navigate } = useContext(UserContext);
 
 	const [toggle, toggleHabitDone] = useState(false);
 	const announceToggle = () => toggleHabitDone(!toggle);
@@ -37,7 +35,7 @@ export default function Today() {
 				{todayHabits.length === 0 && (
 					<NoHabitsMessage>
 						<p>Looks like you haven't got any habits planned for today.</p>
-						<button onClick={() => navigate('/habits')}>Go to Habits</button>
+						<button onClick={() => navigate.current('/habits')}>Go to Habits</button>
 					</NoHabitsMessage>
 				)}
 
