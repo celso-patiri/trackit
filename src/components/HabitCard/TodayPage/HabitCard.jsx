@@ -63,6 +63,8 @@ const Card = styled.section`
 	justify-content: space-between;
 	padding: 15px;
 	box-shadow: var(--habit-box-shadow);
+
+	animation: slidein 300ms ease-in;
 `;
 
 const Content = styled.div`

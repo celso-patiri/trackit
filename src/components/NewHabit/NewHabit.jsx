@@ -95,6 +95,8 @@ const HabitForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	box-shadow: var(--habit-box-shadow);
+
+	animation: slidein 300ms ease-in;
 `;
 
 const NameInput = styled.input`

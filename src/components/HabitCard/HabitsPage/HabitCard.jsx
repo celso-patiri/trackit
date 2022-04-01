@@ -89,6 +89,8 @@ const Card = styled.div`
 	justify-content: space-around;
 	position: relative;
 	box-shadow: var(--habit-box-shadow);
+
+	animation: slidein 300ms ease-in;
 `;
 
 const Days = styled.div`

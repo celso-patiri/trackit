@@ -74,6 +74,18 @@ const AppTheme = createGlobalStyle`
 			border:	2px solid rgba(0,0,0,0);
 		}
 	}
+
+	@keyframes slidein {
+		from {
+			transform: translateY(100%);
+			opacity: 0;
+		}
+
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
 	
 `;
 

@@ -93,4 +93,6 @@ const CalendarWrapper = styled.div`
 			background-color: var(--blue-dark) !important;
 		}
 	}
+
+	animation: slidein 500ms ease-in;
 `;
