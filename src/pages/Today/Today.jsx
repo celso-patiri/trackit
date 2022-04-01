@@ -93,5 +93,7 @@ const NoHabitsMessage = styled.section`
 		border-radius: var(--border-radius-1);
 		height: 6vh;
 		width: 30%;
+		box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.15);
+		cursor: pointer;
 	}
 `;

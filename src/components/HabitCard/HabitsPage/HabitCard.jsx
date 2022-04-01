@@ -103,4 +103,5 @@ const TrashcanSvg = styled.svg`
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	cursor: pointer;
 `;

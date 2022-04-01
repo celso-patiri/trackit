@@ -25,6 +25,8 @@ const Checkbox = styled.input`
 	margin: 0;
 	background-color: ${({ disabled }) => (disabled ? 'var(--gray-disabled)' : '#fff')};
 
+	box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.2);
+
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;

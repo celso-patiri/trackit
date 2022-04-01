@@ -114,6 +114,10 @@ const Days = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 4px;
+
+	input {
+		cursor: pointer;
+	}
 `;
 
 const Buttons = styled.div`
@@ -131,6 +135,8 @@ const Buttons = styled.div`
 		border: none;
 		border-radius: var(--border-radius-1);
 
+		cursor: pointer;
+
 		&:disabled {
 			opacity: 0.7;
 		}
@@ -140,6 +146,7 @@ const Buttons = styled.div`
 const Save = styled.button`
 	color: var(--text-light);
 	background-color: var(--blue-light);
+	box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.25);
 
 	div {
 		height: 100%;

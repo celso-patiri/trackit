@@ -13,7 +13,7 @@ const AppTheme = createGlobalStyle`
 		--green-done: #8fc549;
 		--red-incomplete: #EA5766;
 		--text-light: #fff;
-		--text-disabled: #AFAFAF;
+		--text-disabled: #8a8a8a;
 
 		--input-border: 2px solid var(--gray-light);
 		--input-width: clamp(100px, 70%, 300px); 
