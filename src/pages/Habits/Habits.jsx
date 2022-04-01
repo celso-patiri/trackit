@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import plusIcon from '../../assets/img/plus.png';
 import Footer from '../../components/Footer/Footer';
 import HabitCard from '../../components/HabitCard/HabitsPage/HabitCard';
 import Header from '../../components/Header/Header';
@@ -44,7 +43,7 @@ export default function Habits() {
 			<Main>
 				<MyHabitsTitle>
 					<h1>My Habits</h1>
-					<img onClick={announceNewHabit} src={plusIcon} alt="add habit" />
+					<PlusIcon announceNewHabit={announceNewHabit} />
 				</MyHabitsTitle>
 				{newHabits.map((habit, index) => (
 					<NewHabit
@@ -73,6 +72,34 @@ export default function Habits() {
 		</>
 	);
 }
+
+function PlusIcon({ announceNewHabit }) {
+	return (
+		<PlusContainer onClick={announceNewHabit}>
+			<svg
+				width="14"
+				height="14"
+				viewBox="0 0 14 14"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M0.244925 8.66063V6.23279H5.55921V0.837576H8.39169V6.23279H13.7599V8.66063H8.39169V13.867H5.55921V8.66063H0.244925Z"
+					fill="white"
+				/>
+			</svg>
+		</PlusContainer>
+	);
+}
+
+const PlusContainer = styled.div`
+	padding: 10px;
+	background-color: var(--blue-light);
+	border-radius: var(--border-radius-1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 
 const Main = styled.main`
 	padding: 21px;
