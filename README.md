@@ -23,7 +23,7 @@
   
  </div>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/432badd5-93a4-445d-8562-b801a6fae810/deploy-status)](https://app.netlify.com/sites/celso-trackit/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/432badd5-93a4-445d-8562-b801a6fae810/deploy-status)](https://celso-trackit.netlify.app)
 
 # Getting Started with Create React App
 
