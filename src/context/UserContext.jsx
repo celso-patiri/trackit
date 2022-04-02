@@ -37,8 +37,6 @@ export function UserProvider({ children }) {
 			});
 	}, []);
 
-	useEffect(verifyCredentials, [verifyCredentials]);
-
 	const fetchTodayData = useCallback(() => {
 		if (userData.token) {
 			axios
@@ -57,6 +55,7 @@ export function UserProvider({ children }) {
 		}
 	}, [userData.token]);
 
+	useEffect(verifyCredentials, [verifyCredentials]);
 	useEffect(fetchTodayData, [fetchTodayData]);
 
 	return (

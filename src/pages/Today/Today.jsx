@@ -23,7 +23,7 @@ export default function Today() {
 		<>
 			<Header imgUrl={userData.image} />
 			<main>
-				<Title active={percentageDone > 0}>
+				<Title green={percentageDone > 0}>
 					<h1>{dayjs().format('dddd, DD/MM')}</h1>
 					{percentageDone > 0 ? (
 						<h3>{percentageDone}% done today</h3>
@@ -67,7 +67,7 @@ const Title = styled.div`
 
 	h3 {
 		font-size: var(--font-size-2);
-		color: ${({ active }) => (active ? 'var(--green-done)' : 'var(--gray-light)')};
+		color: ${({ green }) => (green ? 'var(--green-done)' : 'var(--gray-light)')};
 	}
 `;
 

@@ -14,7 +14,7 @@ export default function History() {
 	const { userData } = useContext(UserContext);
 
 	const [daysWithHabits, setDaysWithHabits] = useState([]);
-	const [today, setToday] = useState(new Date());
+	const [date, setDate] = useState(new Date());
 
 	useEffect(() => {
 		let isMounted = true;
@@ -34,18 +34,18 @@ export default function History() {
 			<Header imgUrl={userData.image} />
 			<Main>
 				<CalendarWrapper>
-					<Calendar onChange={setToday} value={today} tileClassName={getDateDoneStatus} />
+					<Calendar onChange={setDate} value={date} tileClassName={getDateDoneStatus} />
 				</CalendarWrapper>
 			</Main>
 			<Footer />
 		</>
 	);
 
-	//Calendar date classNames
-	function getDateDoneStatus({ date, view }) {
+	//Get callendar date classNames
+	function getDateDoneStatus({ date: dateTile, view }) {
 		if (view !== 'month') return '';
 		const dateHasHabits = daysWithHabits.find(
-			(day) => day === dayjs(date).format('DD/MM/YYYY')
+			(day) => day === dayjs(dateTile).format('DD/MM/YYYY')
 		);
 		if (dateHasHabits) return dateHasHabits.done ? 'complete' : 'incomplete';
 	}
