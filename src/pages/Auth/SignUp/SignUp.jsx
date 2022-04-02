@@ -7,7 +7,7 @@ import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../s
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
 
-export default function Register() {
+export default function SignUp() {
 	const { userData, navigate } = useContext(UserContext);
 
 	const [userInfo, setUserInfo] = useState({});
@@ -15,7 +15,7 @@ export default function Register() {
 
 	useEffect(() => {
 		if (userData.token) navigate.current('/habits');
-	});
+	}, [userData.token, navigate]);
 
 	return (
 		<FormContainer>
@@ -66,7 +66,8 @@ export default function Register() {
 					)}
 				</StyledSubmit>
 			</Form>
-			<StyledLink to="/">Have an account? Log in</StyledLink>
+
+			{!isProcessingRequest && <StyledLink to="/">Have an account? Log in</StyledLink>}
 		</FormContainer>
 	);
 
@@ -77,12 +78,14 @@ export default function Register() {
 	}
 
 	function handleSubmit(e) {
-		if (!userInfo.name || !userInfo.password || !userInfo.email || !userInfo.picture) return;
+		if (!userInfo.name || !userInfo.password || !userInfo.email || !userInfo.image) return;
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)
-			.then((res) => navigate('/'))
-			.catch((err) => window.alert('Something went wrong'))
-			.finally(() => setIsProcessingRequest(false));
+			.then((res) => navigate.current('/'))
+			.catch((err) => {
+				setIsProcessingRequest(false);
+				window.alert('Something went wrong');
+			});
 	}
 }

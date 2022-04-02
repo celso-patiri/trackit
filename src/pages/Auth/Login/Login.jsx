@@ -8,14 +8,14 @@ import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../s
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
 
 export default function Login() {
-	const { userData, setUserSession, navigate } = useContext(UserContext);
+	const { userData, logUserIn, navigate } = useContext(UserContext);
 
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
 	useEffect(() => {
 		if (userData.token) navigate.current('/habits');
-	}, [userData.token]);
+	}, [userData.token, navigate]);
 
 	return (
 		<FormContainer>
@@ -50,7 +50,10 @@ export default function Login() {
 					)}
 				</StyledSubmit>
 			</Form>
-			<StyledLink to="/register">Don't have an account? Sign up</StyledLink>
+
+			{!isProcessingRequest && (
+				<StyledLink to="/signup">Don't have an account? Sign up</StyledLink>
+			)}
 		</FormContainer>
 	);
 
@@ -65,8 +68,10 @@ export default function Login() {
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)
-			.then(({ data }) => setUserSession(data))
-			.catch((err) => window.alert('Invalid credentials'))
-			.finally(() => setIsProcessingRequest(false));
+			.then(({ data }) => logUserIn(data))
+			.catch((err) => {
+				setIsProcessingRequest(false);
+				window.alert('Invalid credentials');
+			});
 	}
 }
