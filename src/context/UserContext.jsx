@@ -13,36 +13,33 @@ export function UserProvider({ children }) {
 	const [userData, setUserData] = useState({});
 	const navigate = useRef(useNavigate());
 
-	const setUserSession = (data) => {
+	const logUserIn = (data) => {
 		localStorage.setItem('user', JSON.stringify(data));
 		setUserData(data);
+	};
+
+	const logUserOut = () => {
+		setUserData({});
+		localStorage.removeItem('user');
+		navigate.current('/');
 	};
 
 	const verifyCredentials = useCallback(() => {
 		const userSessionString = localStorage.getItem('user');
 
-		if (!userSessionString) {
-			navigate.current('/');
-			return;
-		}
-
-		const user = JSON.parse(userSessionString);
-		axios
-			.post(URL.login, { email: user.email, password: user.password })
-			.then(({ data }) => setUserSession(data))
-			.catch((err) => {
-				setUserData({});
-				localStorage.removeItem('user');
-				navigate.current('/');
-			});
+		if (userSessionString) {
+			const user = JSON.parse(userSessionString);
+			axios
+				.post(URL.login, { email: user.email, password: user.password })
+				.then(({ data }) => logUserIn(data))
+				.catch(logUserOut);
+		} else navigate.current('/');
 	}, []);
 
 	const fetchTodayData = useCallback(() => {
 		if (userData.token) {
 			axios
-				.get(URL.today, {
-					headers: { Authorization: `Bearer ${userData.token}` },
-				})
+				.get(URL.today, { headers: { Authorization: `Bearer ${userData.token}` } })
 				.then(({ data }) => {
 					setUserData((prevUserData) => {
 						return {
@@ -59,7 +56,7 @@ export function UserProvider({ children }) {
 	useEffect(fetchTodayData, [fetchTodayData]);
 
 	return (
-		<UserContext.Provider value={{ userData, setUserSession, fetchTodayData, navigate }}>
+		<UserContext.Provider value={{ userData, logUserIn, fetchTodayData, navigate }}>
 			{children}
 		</UserContext.Provider>
 	);
