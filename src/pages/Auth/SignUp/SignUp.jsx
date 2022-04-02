@@ -1,23 +1,21 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
-import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../assets/logo.png';
 import UserContext from '../../../context/UserContext';
 import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
 
-export default function Register() {
-	const { userData } = useContext(UserContext);
+export default function SignUp() {
+	const { userData, navigate } = useContext(UserContext);
 
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
-	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (userData.token) navigate('/habits');
-	});
+		if (userData.token) navigate.current('/habits');
+	}, [userData.token, navigate]);
 
 	return (
 		<FormContainer>
@@ -68,7 +66,8 @@ export default function Register() {
 					)}
 				</StyledSubmit>
 			</Form>
-			<StyledLink to="/">Have an account? Log in</StyledLink>
+
+			{!isProcessingRequest && <StyledLink to="/">Have an account? Log in</StyledLink>}
 		</FormContainer>
 	);
 
@@ -79,13 +78,14 @@ export default function Register() {
 	}
 
 	function handleSubmit(e) {
-		if (!userInfo.name || !userInfo.password || !userInfo.email || !userInfo.picture) return;
-
+		if (!userInfo.name || !userInfo.password || !userInfo.email || !userInfo.image) return;
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)
-			.then(navigate('/'))
-			.catch((err) => window.alert('pera la meu rei'))
-			.finally(() => setIsProcessingRequest(false));
+			.then((res) => navigate.current('/'))
+			.catch((err) => {
+				setIsProcessingRequest(false);
+				window.alert('Something went wrong');
+			});
 	}
 }
