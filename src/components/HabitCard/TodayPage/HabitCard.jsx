@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import styled from 'styled-components';
 import UserContext from '../../../context/UserContext';
@@ -8,16 +8,21 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 	const { userData } = useContext(UserContext);
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
+	let isMounted = useRef(true);
+	useEffect(() => {
+		return () => (isMounted.current = false);
+	}, []);
+
 	return (
-		<Card onClick={checkTogglePOST}>
+		<Card onClick={postToggle}>
 			<Content>
 				<h1>{name}</h1>
 				<h3>
-					Current streak: <Highlight active={done}>{streak} days</Highlight>
+					Current streak: <Highlight green={done}>{streak} days</Highlight>
 				</h3>
 				<h3>
 					Personal record:{' '}
-					<Highlight active={done && streak >= record}>{record} days</Highlight>
+					<Highlight green={done && streak >= record}>{record} days</Highlight>
 				</h3>
 			</Content>
 			<Icon done={done} alt="check">
@@ -30,7 +35,7 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 		</Card>
 	);
 
-	function checkTogglePOST() {
+	function postToggle() {
 		if (isProcessingRequest) return;
 
 		const action = done ? 'uncheck' : 'check';
@@ -38,17 +43,14 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 
 		setIsProcessingRequest(true);
 		axios
-			.post(
-				url,
-				{},
-				{
-					headers: { Authorization: `Bearer ${userData.token}` },
-				}
-			)
+			.post(url, {}, { headers: { Authorization: `Bearer ${userData.token}` } })
 			.then(annouceToggle)
-			.catch((err) => console.error(err));
-
-		setTimeout(() => setIsProcessingRequest(false), 800);
+			.catch(console.error)
+			.finally(
+				setTimeout(() => {
+					if (isMounted.current) setIsProcessingRequest(false);
+				}, 800)
+			);
 	}
 }
 
@@ -83,7 +85,7 @@ const Content = styled.div`
 `;
 
 const Highlight = styled.span`
-	color: ${({ active }) => (active ? 'var(--green-done)' : 'var(--gray-dark)')};
+	color: ${({ green }) => (green ? 'var(--green-done)' : 'var(--gray-dark)')};
 `;
 
 function Check() {

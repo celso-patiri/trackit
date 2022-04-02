@@ -1,19 +1,45 @@
 import axios from 'axios';
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext({});
 
-const TODAY_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
+const URL = {
+	today: 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
+	login: 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
+};
 
 export function UserProvider({ children }) {
 	const [userData, setUserData] = useState({});
+	const navigate = useRef(useNavigate());
+
+	const logUserIn = (data) => {
+		localStorage.setItem('user', JSON.stringify(data));
+		setUserData(data);
+	};
+
+	const logUserOut = () => {
+		setUserData({});
+		localStorage.removeItem('user');
+		navigate.current('/');
+	};
+
+	const verifyCredentials = useCallback(() => {
+		const userSessionString = localStorage.getItem('user');
+
+		if (userSessionString) {
+			const user = JSON.parse(userSessionString);
+			axios
+				.post(URL.login, { email: user.email, password: user.password })
+				.then(({ data }) => logUserIn(data))
+				.catch(logUserOut);
+		} else navigate.current('/');
+	}, []);
 
 	const fetchTodayData = useCallback(() => {
 		if (userData.token) {
 			axios
-				.get(TODAY_URL, {
-					headers: { Authorization: `Bearer ${userData.token}` },
-				})
+				.get(URL.today, { headers: { Authorization: `Bearer ${userData.token}` } })
 				.then(({ data }) => {
 					setUserData((prevUserData) => {
 						return {
@@ -26,10 +52,11 @@ export function UserProvider({ children }) {
 		}
 	}, [userData.token]);
 
+	useEffect(verifyCredentials, [verifyCredentials]);
 	useEffect(fetchTodayData, [fetchTodayData]);
 
 	return (
-		<UserContext.Provider value={{ userData, setUserData, fetchTodayData }}>
+		<UserContext.Provider value={{ userData, logUserIn, fetchTodayData, navigate }}>
 			{children}
 		</UserContext.Provider>
 	);
