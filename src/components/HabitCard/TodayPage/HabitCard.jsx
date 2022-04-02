@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import styled from 'styled-components';
 import UserContext from '../../../context/UserContext';
@@ -7,6 +7,11 @@ import UserContext from '../../../context/UserContext';
 export default function HabitCard({ name, streak, record, done, id, annouceToggle }) {
 	const { userData } = useContext(UserContext);
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
+
+	let isMounted = useRef(true);
+	useEffect(() => {
+		return () => (isMounted.current = false);
+	}, []);
 
 	return (
 		<Card onClick={postToggle}>
@@ -41,7 +46,11 @@ export default function HabitCard({ name, streak, record, done, id, annouceToggl
 			.post(url, {}, { headers: { Authorization: `Bearer ${userData.token}` } })
 			.then(annouceToggle)
 			.catch(console.error)
-			.finally(setTimeout(() => setIsProcessingRequest(false), 800));
+			.finally(
+				setTimeout(() => {
+					if (isMounted.current) setIsProcessingRequest(false);
+				}, 800)
+			);
 	}
 }
 
