@@ -35,13 +35,8 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 		axios
 			.post(
 				URL,
-				{
-					name: habitName,
-					days: selectedDays,
-				},
-				{
-					headers: { Authorization: `Bearer ${userData.token}` },
-				}
+				{ name: habitName, days: selectedDays },
+				{ headers: { Authorization: `Bearer ${userData.token}` } }
 			)
 			.then((res) => {
 				closeHabit(id);

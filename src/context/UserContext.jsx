@@ -24,16 +24,18 @@ export function UserProvider({ children }) {
 		navigate.current('/');
 	};
 
-	const verifyCredentials = useCallback(() => {
-		const userSessionString = localStorage.getItem('user');
+	const verifyLocalStorageCredentials = useCallback(() => {
+		const userDataString = localStorage.getItem('user');
 
-		if (userSessionString) {
-			const user = JSON.parse(userSessionString);
+		if (userDataString) {
+			const { email, password } = JSON.parse(userDataString);
 			axios
-				.post(URL.login, { email: user.email, password: user.password })
+				.post(URL.login, { email, password })
 				.then(({ data }) => logUserIn(data))
 				.catch(logUserOut);
-		} else navigate.current('/');
+		} else {
+			navigate.current('/');
+		}
 	}, []);
 
 	const fetchTodayData = useCallback(() => {
@@ -52,7 +54,7 @@ export function UserProvider({ children }) {
 		}
 	}, [userData.token]);
 
-	useEffect(verifyCredentials, [verifyCredentials]);
+	useEffect(verifyLocalStorageCredentials, [verifyLocalStorageCredentials]);
 	useEffect(fetchTodayData, [fetchTodayData]);
 
 	return (
