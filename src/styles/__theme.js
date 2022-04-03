@@ -86,7 +86,18 @@ const AppTheme = createGlobalStyle`
 			opacity: 1;
 		}
 	}
-	
+
+	@keyframes slidein-horizontal {
+		from {
+			transform: translatex(100%);
+			opacity: 0;
+		}
+
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
 `;
 
 export default AppTheme;

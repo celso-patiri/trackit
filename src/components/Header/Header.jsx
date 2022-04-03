@@ -1,13 +1,20 @@
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
+import UserContext from '../../context/UserContext';
 
 export default function Header({ imgUrl }) {
-	const navigate = useNavigate();
+	const { navigate, logUserOut } = useContext(UserContext);
+
+	const [displayLogout, setDisplayLogout] = useState(false);
+	const toggleLogout = () => setDisplayLogout(!displayLogout);
 
 	return (
 		<StyledHeader>
-			<h1 onClick={() => navigate('/')}>TrackIt</h1>
-			<UserAvatar src={imgUrl} alt="user avatar" />
+			<h1 onClick={() => navigate.current('/')}>TrackIt</h1>
+			<Flex>
+				{displayLogout && <LogOut onClick={logUserOut}>LogOut</LogOut>}
+				<UserAvatar src={imgUrl} onClick={toggleLogout} alt="user avatar" />
+			</Flex>
 		</StyledHeader>
 	);
 }
@@ -33,8 +40,26 @@ const StyledHeader = styled.header`
 	}
 `;
 
+const Flex = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+`;
+
 const UserAvatar = styled.img`
 	border-radius: 50%;
 	width: 3rem;
 	height: 3rem;
+	z-index: 1;
+`;
+
+const LogOut = styled.button`
+	background-color: var(--red-incomplete);
+	color: #fff;
+	border-radius: var(--border-radius-2);
+	border: none;
+	height: 2rem;
+	box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.2);
+
+	animation: slidein-horizontal 300ms ease-in;
 `;

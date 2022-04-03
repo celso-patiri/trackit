@@ -58,7 +58,7 @@ export function UserProvider({ children }) {
 	useEffect(fetchTodayData, [fetchTodayData]);
 
 	return (
-		<UserContext.Provider value={{ userData, logUserIn, fetchTodayData, navigate }}>
+		<UserContext.Provider value={{ userData, logUserIn, logUserOut, fetchTodayData, navigate }}>
 			{children}
 		</UserContext.Provider>
 	);
