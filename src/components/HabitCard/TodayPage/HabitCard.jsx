@@ -67,6 +67,12 @@ const Card = styled.section`
 	box-shadow: var(--habit-box-shadow);
 
 	animation: slidein 300ms ease-in;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.4);
+		transform: scale(1.01);
+	}
 `;
 
 const Content = styled.div`
