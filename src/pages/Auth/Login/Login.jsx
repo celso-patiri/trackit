@@ -64,6 +64,7 @@ export default function Login() {
 	}
 
 	function handleSubmit(e) {
+		e.preventDefault();
 		if (!userInfo.email || !userInfo.password) return;
 		setIsProcessingRequest(true);
 		axios
