@@ -1,9 +1,18 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import isEmail from 'validator/lib/isEmail';
 import logoImg from '../../../assets/logo.png';
 import UserContext from '../../../context/UserContext';
-import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
+import {
+	ErrorMessage,
+	Form,
+	FormContainer,
+	Input,
+	Logo,
+	StyledLink,
+	StyledSubmit,
+} from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
 
@@ -12,6 +21,7 @@ export default function Login() {
 
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
 		if (userData.token) navigate.current('/habits');
@@ -37,6 +47,9 @@ export default function Login() {
 					disabled={isProcessingRequest}
 					required
 				/>
+
+				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+
 				<StyledSubmit
 					className="submit"
 					type="submit"
@@ -65,7 +78,9 @@ export default function Login() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		if (!userInfo.email || !userInfo.password) return;
+		if (!isEmail(userInfo.email)) return setErrorMessage('Invalid email');
+		if (!userInfo.password) return setErrorMessage('Please insert password');
+
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)

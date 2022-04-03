@@ -1,9 +1,19 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import isEmail from 'validator/lib/isEmail';
+import isURL from 'validator/lib/isURL';
 import logoImg from '../../../assets/logo.png';
 import UserContext from '../../../context/UserContext';
-import { Form, FormContainer, Input, Logo, StyledLink, StyledSubmit } from '../styledComponents';
+import {
+	ErrorMessage,
+	Form,
+	FormContainer,
+	Input,
+	Logo,
+	StyledLink,
+	StyledSubmit,
+} from '../styledComponents';
 
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
 
@@ -12,6 +22,7 @@ export default function SignUp() {
 
 	const [userInfo, setUserInfo] = useState({});
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
 		if (userData.token) navigate.current('/habits');
@@ -53,6 +64,9 @@ export default function SignUp() {
 					disabled={isProcessingRequest}
 					required
 				/>
+
+				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+
 				<StyledSubmit
 					className="submit"
 					onClick={handleSubmit}
@@ -78,7 +92,14 @@ export default function SignUp() {
 	}
 
 	function handleSubmit(e) {
-		if (!userInfo.name || !userInfo.password || !userInfo.email || !userInfo.image) return;
+		e.preventDefault();
+
+		if (!isEmail(userInfo.email)) return setErrorMessage('Invalid email');
+		if (!userInfo.password) return setErrorMessage('Please insert a valid password');
+		if (!userInfo.name) return setErrorMessage('Please insert a valid name');
+		if (!userInfo.image || !isURL(userInfo.image))
+			return setErrorMessage('Please insert valid image URL');
+
 		setIsProcessingRequest(true);
 		axios
 			.post(URL, userInfo)

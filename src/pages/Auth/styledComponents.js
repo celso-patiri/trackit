@@ -60,4 +60,9 @@ const StyledLink = styled(Link)`
 	text-decoration: none;
 `;
 
-export { FormContainer, Input, Form, StyledSubmit, Logo, StyledLink };
+const ErrorMessage = styled.p`
+	color: var(--red-incomplete);
+	margin: 1vh;
+`;
+
+export { FormContainer, Input, Form, StyledSubmit, Logo, StyledLink, ErrorMessage };
