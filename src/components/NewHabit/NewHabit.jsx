@@ -15,6 +15,8 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 	const [selectedDays, setSelectedDays] = useState([]);
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
+	const inputIsValid = habitName && selectedDays.length > 0;
+
 	const handleInput = (e) => setHabitName(e.target.value);
 
 	const handleCancel = (e) => {
@@ -22,14 +24,17 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 		if (!isProcessingRequest) closeHabit(id);
 	};
 
-	const selectDay = (weekDay) => {
-		selectedDays.push(weekDay);
-		setSelectedDays([...selectedDays]);
+	const toggleDaySelect = (weekDay) => {
+		if (selectedDays.some((day) => day === weekDay)) {
+			setSelectedDays(selectedDays.filter((day) => day !== weekDay));
+		} else {
+			setSelectedDays([...selectedDays, weekDay]);
+		}
 	};
 
 	const saveHabit = (e) => {
 		e.preventDefault();
-		if (habitName.length === 0 || isProcessingRequest) return;
+		if (!inputIsValid || isProcessingRequest) return;
 
 		setIsProcessingRequest(true);
 		axios
@@ -59,7 +64,7 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 				{WEEKDAYS.map((weekDay, index) => (
 					<DayCheckbox
 						weekDay={weekDay}
-						toggle={() => selectDay(index)}
+						toggle={() => toggleDaySelect(index)}
 						disabled={isProcessingRequest}
 						key={weekDay + index}
 					/>
@@ -67,7 +72,7 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 			</Days>
 			<Buttons>
 				<Cancel onClick={handleCancel}>Cancel</Cancel>
-				<Save onClick={saveHabit}>
+				<Save onClick={saveHabit} active={inputIsValid}>
 					{isProcessingRequest ? (
 						<ThreeDots color="#FFF" height={70} width={70} />
 					) : (
@@ -140,7 +145,7 @@ const Buttons = styled.div`
 
 const Save = styled.button`
 	color: var(--text-light);
-	background-color: var(--blue-light);
+	background-color: ${({ active }) => (active ? 'var(--blue-light)' : 'var(--gray-light)')};
 	box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.25);
 
 	div {
