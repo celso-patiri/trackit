@@ -43,15 +43,15 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 				{ name: habitName, days: selectedDays },
 				{ headers: { Authorization: `Bearer ${userData.token}` } }
 			)
-			.then((res) => {
+			.then(() => {
 				closeHabit(id);
 				announceSave();
 			})
-			.catch((err) => setIsProcessingRequest(false));
+			.catch(() => setIsProcessingRequest(false));
 	};
 
 	return (
-		<HabitForm>
+		<HabitForm onKeyPress={(e) => e.key === 'Enter' && saveHabit(e)}>
 			<NameInput
 				value={habitName}
 				onChange={handleInput}
@@ -72,7 +72,7 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 			</Days>
 			<Buttons>
 				<Cancel onClick={handleCancel}>Cancel</Cancel>
-				<Save onClick={saveHabit} active={inputIsValid}>
+				<Save onClick={saveHabit} active={inputIsValid} type="submit">
 					{isProcessingRequest ? (
 						<ThreeDots color="#FFF" height={70} width={70} />
 					) : (
