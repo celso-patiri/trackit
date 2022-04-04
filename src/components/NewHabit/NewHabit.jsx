@@ -8,11 +8,11 @@ import DayCheckbox from '../DayCheckbox/DayCheckbox';
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
-export default function NewHabit({ closeHabit, id, announceSave }) {
+export default function NewHabit({ closeHabit, id, name, weekdays, announceSave }) {
 	const { userData } = useContext(UserContext);
 
-	const [habitName, setHabitName] = useState('');
-	const [selectedDays, setSelectedDays] = useState([]);
+	const [habitName, setHabitName] = useState(name);
+	const [selectedDays, setSelectedDays] = useState(weekdays);
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
 	const inputIsValid = habitName && selectedDays.length > 0;
@@ -21,7 +21,7 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 
 	const handleCancel = (e) => {
 		e.preventDefault();
-		if (!isProcessingRequest) closeHabit(id);
+		if (!isProcessingRequest) closeHabit(id, habitName, selectedDays);
 	};
 
 	const toggleDaySelect = (weekDay) => {
@@ -65,6 +65,7 @@ export default function NewHabit({ closeHabit, id, announceSave }) {
 					<DayCheckbox
 						weekDay={weekDay}
 						toggle={() => toggleDaySelect(index)}
+						isChecked={selectedDays.includes(index)}
 						disabled={isProcessingRequest}
 						key={weekDay + index}
 					/>
