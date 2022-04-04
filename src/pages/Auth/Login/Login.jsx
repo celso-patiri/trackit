@@ -5,6 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 import logoImg from '../../../assets/logo.png';
 import UserContext from '../../../context/UserContext';
 import {
+	CheckBoxDiv,
 	ErrorMessage,
 	Form,
 	FormContainer,
@@ -23,9 +24,33 @@ export default function Login() {
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
+	const [keepConnected, setKeepConnected] = useState(false);
+	const toggleKeepConnected = () => setKeepConnected(!keepConnected);
+
 	useEffect(() => {
 		if (userData.token) navigate.current('/today');
 	}, [userData.token, navigate]);
+
+	const handleInput = (e) => {
+		const infoInput = e.target;
+		userInfo[infoInput.name] = infoInput.value;
+		setUserInfo({ ...userInfo });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (!isEmail(userInfo.email)) return setErrorMessage('Invalid email');
+		if (!userInfo.password) return setErrorMessage('Please insert password');
+
+		setIsProcessingRequest(true);
+		axios
+			.post(URL, userInfo)
+			.then(({ data }) => logUserIn(data, keepConnected))
+			.catch(() => {
+				setIsProcessingRequest(false);
+				window.alert('Invalid credentials');
+			});
+	};
 
 	return (
 		<FormContainer>
@@ -47,6 +72,8 @@ export default function Login() {
 					disabled={isProcessingRequest}
 					required
 				/>
+
+				<KeepConnectedInput />
 
 				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
@@ -70,24 +97,12 @@ export default function Login() {
 		</FormContainer>
 	);
 
-	function handleInput(e) {
-		const infoInput = e.target;
-		userInfo[infoInput.name] = infoInput.value;
-		setUserInfo({ ...userInfo });
-	}
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		if (!isEmail(userInfo.email)) return setErrorMessage('Invalid email');
-		if (!userInfo.password) return setErrorMessage('Please insert password');
-
-		setIsProcessingRequest(true);
-		axios
-			.post(URL, userInfo)
-			.then(({ data }) => logUserIn(data))
-			.catch((err) => {
-				setIsProcessingRequest(false);
-				window.alert('Invalid credentials');
-			});
+	function KeepConnectedInput() {
+		return (
+			<CheckBoxDiv onClick={toggleKeepConnected}>
+				<input type="checkbox" checked={keepConnected} onChange={() => true} />
+				<p>Keep me connected</p>
+			</CheckBoxDiv>
+		);
 	}
 }

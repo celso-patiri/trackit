@@ -13,14 +13,14 @@ export function UserProvider({ children }) {
 	const [userData, setUserData] = useState({});
 	const navigate = useRef(useNavigate());
 
-	const logUserIn = (data) => {
-		localStorage.setItem('user', JSON.stringify(data));
+	const logUserIn = (data, keepConnected) => {
+		if (keepConnected) localStorage.setItem('user', JSON.stringify(data));
 		setUserData(data);
 	};
 
 	const logUserOut = () => {
-		setUserData({});
 		localStorage.removeItem('user');
+		setUserData({});
 		navigate.current('/');
 	};
 

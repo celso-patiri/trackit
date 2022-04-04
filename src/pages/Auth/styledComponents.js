@@ -65,4 +65,12 @@ const ErrorMessage = styled.p`
 	margin: 1vh;
 `;
 
-export { FormContainer, Input, Form, StyledSubmit, Logo, StyledLink, ErrorMessage };
+const CheckBoxDiv = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin: 5px 0;
+	font-size: 16px;
+`;
+
+export { FormContainer, Input, Form, StyledSubmit, Logo, StyledLink, ErrorMessage, CheckBoxDiv };

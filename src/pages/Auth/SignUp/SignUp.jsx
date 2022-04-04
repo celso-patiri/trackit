@@ -28,6 +28,31 @@ export default function SignUp() {
 		if (userData.token) navigate.current('/today');
 	}, [userData.token, navigate]);
 
+	const handleInput = (e) => {
+		const infoInput = e.target;
+		userInfo[infoInput.name] = infoInput.value;
+		setUserInfo({ ...userInfo });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (!isEmail(userInfo.email)) return setErrorMessage('Invalid email');
+		if (!userInfo.password) return setErrorMessage('Please insert a valid password');
+		if (!userInfo.name) return setErrorMessage('Please insert a valid name');
+		if (!userInfo.image || !isURL(userInfo.image))
+			return setErrorMessage('Please insert valid image URL');
+
+		setIsProcessingRequest(true);
+		axios
+			.post(URL, userInfo)
+			.then(() => navigate.current('/'))
+			.catch(() => {
+				setIsProcessingRequest(false);
+				window.alert('Something went wrong');
+			});
+	};
+
 	return (
 		<FormContainer>
 			<Logo src={logoImg} alt="logo"></Logo>
@@ -84,29 +109,4 @@ export default function SignUp() {
 			{!isProcessingRequest && <StyledLink to="/">Have an account? Log in</StyledLink>}
 		</FormContainer>
 	);
-
-	function handleInput(e) {
-		const infoInput = e.target;
-		userInfo[infoInput.name] = infoInput.value;
-		setUserInfo({ ...userInfo });
-	}
-
-	function handleSubmit(e) {
-		e.preventDefault();
-
-		if (!isEmail(userInfo.email)) return setErrorMessage('Invalid email');
-		if (!userInfo.password) return setErrorMessage('Please insert a valid password');
-		if (!userInfo.name) return setErrorMessage('Please insert a valid name');
-		if (!userInfo.image || !isURL(userInfo.image))
-			return setErrorMessage('Please insert valid image URL');
-
-		setIsProcessingRequest(true);
-		axios
-			.post(URL, userInfo)
-			.then((res) => navigate.current('/'))
-			.catch((err) => {
-				setIsProcessingRequest(false);
-				window.alert('Something went wrong');
-			});
-	}
 }
