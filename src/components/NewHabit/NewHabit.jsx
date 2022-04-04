@@ -12,7 +12,7 @@ export default function NewHabit({ closeHabit, id, name, weekdays, announceSave 
 	const { userData } = useContext(UserContext);
 
 	const [habitName, setHabitName] = useState(name);
-	const [selectedDays, setSelectedDays] = useState(weekdays);
+	const [selectedDays, setSelectedDays] = useState(weekdays || []);
 	const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
 	const inputIsValid = habitName && selectedDays.length > 0;
