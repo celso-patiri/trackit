@@ -24,7 +24,7 @@ export default function Login() {
 	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
-		if (userData.token) navigate.current('/habits');
+		if (userData.token) navigate.current('/today');
 	}, [userData.token, navigate]);
 
 	return (
