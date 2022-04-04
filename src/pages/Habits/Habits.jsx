@@ -13,8 +13,10 @@ export default function Habits() {
 	const { userData, fetchTodayData } = useContext(UserContext);
 
 	const [habits, setHabits] = useState([]);
-	const [newHabits, setNewHabits] = useState([]);
+	const [newHabits, setNewHabits] = useState({ open: [], closed: [] });
+
 	const [habitChange, setHabitChange] = useState(false);
+	const announceChange = () => setHabitChange(!habitChange);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -29,18 +31,27 @@ export default function Habits() {
 		return () => (isMounted = false);
 	}, [userData.token, habitChange]);
 
-	useEffect(fetchTodayData, [habits, fetchTodayData]);
+	useEffect(fetchTodayData, [habits.length, fetchTodayData]);
 
 	const announceNewHabit = () => {
-		newHabits.push(newHabits.length);
-		setNewHabits([...newHabits]);
+		const newId = newHabits.open.length + newHabits.closed.length;
+
+		const newHabit =
+			newHabits.closed.length > 0
+				? newHabits.closed.pop()
+				: { id: newId, name: '', weekdays: [] };
+
+		setNewHabits({
+			...newHabits,
+			open: [newHabit, ...newHabits.open],
+		});
 	};
 
-	const closeNewHabit = (index) => {
-		setNewHabits(newHabits.filter((habit, habitIndex) => habitIndex !== index));
+	const closeNewHabit = (index, name, weekdays) => {
+		newHabits.closed.push({ id: index, name, weekdays });
+		newHabits.open = newHabits.open.filter((habit) => habit.id !== index);
+		setNewHabits({ ...newHabits });
 	};
-
-	const announceChange = () => setHabitChange(!habitChange);
 
 	return (
 		<>
@@ -50,12 +61,14 @@ export default function Habits() {
 					<h1>My Habits</h1>
 					<PlusIcon announceNewHabit={announceNewHabit} />
 				</MyHabitsTitle>
-				{newHabits.map((habit, index) => (
+				{newHabits.open.map((habit) => (
 					<NewHabit
-						id={index}
+						id={habit.id}
 						closeHabit={closeNewHabit}
 						announceSave={announceChange}
-						key={habit}
+						name={habit.name}
+						weekdays={habit.weekdays}
+						key={habit.toString() + habit.id}
 					/>
 				))}
 				{habits.length === 0 && (
