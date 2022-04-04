@@ -31,7 +31,7 @@ export default function Habits() {
 		return () => (isMounted = false);
 	}, [userData.token, habitChange]);
 
-	useEffect(fetchTodayData, [habits, fetchTodayData]);
+	useEffect(fetchTodayData, [habits.length, fetchTodayData]);
 
 	const announceNewHabit = () => {
 		const newId = newHabits.open.length + newHabits.closed.length;
