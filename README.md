@@ -2,7 +2,7 @@
   
  
   
-  <a href="https://celso-trackit.netlify.app/" target="_blank">
+  <a href="https://celso-trackit.vercel.app/" target="_blank">
     <img src="https://github.com/celso-patiri/trackit/blob/master/src/assets/logo.png" alt="Logo" width="200">
   </a>
   
@@ -23,7 +23,6 @@
   
  </div>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/432badd5-93a4-445d-8562-b801a6fae810/deploy-status)](https://celso-trackit.netlify.app)
 
 # Getting Started with Create React App
 
