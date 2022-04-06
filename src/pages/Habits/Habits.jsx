@@ -35,7 +35,6 @@ export default function Habits() {
 
 	const announceNewHabit = () => {
 		const newId = newHabits.open.length + newHabits.closed.length;
-
 		const newHabit =
 			newHabits.closed.length > 0
 				? newHabits.closed.pop()
